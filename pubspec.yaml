@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
     
+
+  smooth_page_indicator: ^3.0.0  
   lottie: ^3.7.0
   bloc: ^9.2.1
   cached_network_image: ^4.0.0
@@ -38,7 +40,6 @@ dependencies:
   dartz: ^0.10.1
   device_preview_plus: ^2.9.2
   equatable: ^2.1.0
- 
   flutter_animate: ^4.5.2
   flutter_bloc: ^9.1.1
   flutter_image_compress: ^2.5.1

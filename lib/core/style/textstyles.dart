@@ -829,6 +829,37 @@ class AppTextStyle {
 
   // Alexandria — display numerals (Splash countdown, Progress percentage).
   // Requires the Alexandria font to be added to pubspec.yaml, see [alexandria].
+  // Used by the onboarding "message" block and hero caption.
+  static TextStyle font14TextSecondaryBoldTajawal() {
+    return TextStyle(
+      fontSize: 14.sp,
+      fontWeight: FontWeightHelper.bold,
+      fontFamily: tajawal,
+      color: ColorPalette.textSecondary, // #4BC7D8 · "eyebrow" line
+      height: 1.5,
+    );
+  }
+
+  static TextStyle font16TextSecondaryBoldTajawal() {
+    return TextStyle(
+      fontSize: 16.sp,
+      fontWeight: FontWeightHelper.bold,
+      fontFamily: tajawal,
+      color: ColorPalette.textSecondary, // #4BC7D8 · hero caption
+      height: 1.5,
+    );
+  }
+
+  static TextStyle font16TextHighlightBoldTajawal() {
+    return TextStyle(
+      fontSize: 16.sp,
+      fontWeight: FontWeightHelper.bold,
+      fontFamily: tajawal,
+      color: ColorPalette.textHighLight, // #D6FB00 · hero caption, final page
+      height: 1.5,
+    );
+  }
+
   static TextStyle font26TextLightBoldAlexandria() {
     return TextStyle(
       fontSize: 26.sp,

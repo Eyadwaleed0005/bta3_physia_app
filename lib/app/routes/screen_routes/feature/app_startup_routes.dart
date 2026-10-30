@@ -1,6 +1,6 @@
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
-import 'package:bta3_physia/features/app_startup/presentation/onboarding/onboarding_screen.dart';
-import 'package:bta3_physia/features/app_startup/presentation/splash/splash_screen.dart';
+import 'package:bta3_physia/features/app_startup/presentation/screens/onboarding/onboarding_screen.dart';
+import 'package:bta3_physia/features/app_startup/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 abstract final class AppStartupRoutes {
