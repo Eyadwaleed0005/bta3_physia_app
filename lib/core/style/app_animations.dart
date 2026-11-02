@@ -256,14 +256,7 @@ abstract final class AppAnimations {
   static Widget bottomNavBarEntrance({required Widget child}) {
     return child
         .animate(delay: 600.ms)
-        .fadeIn(duration: 450.ms, curve: Curves.easeOut)
-        .moveY(begin: 120, end: 0, duration: 900.ms, curve: Curves.easeOutBack)
-        .scale(
-          begin: const Offset(0.92, 0.92),
-          end: const Offset(1, 1),
-          duration: 900.ms,
-          curve: Curves.easeOutBack,
-        );
+        .fadeIn(duration: 450.ms, curve: Curves.easeOut);
   }
 
   static Widget emptyStateEntrance({required Widget child}) {

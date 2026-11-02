@@ -23,7 +23,7 @@ class Bta3PhysiaApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           locale: DevicePreviewService.locale(context),
           theme: ThemeData(),
-          initialRoute: RouteNames.splashScreen,
+          initialRoute: RouteNames.mainNavigationScreen,
           onGenerateRoute: AppRoutes.generateRoute,
           builder: _buildApp,
         );

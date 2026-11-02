@@ -23,10 +23,12 @@ class LoginScreenContent extends StatelessWidget {
   }
 
   void _onAuthenticated(BuildContext context) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(RouteNames.homeScreen, (Route<dynamic> route) {
-          return false;
-        });
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      RouteNames.mainNavigationScreen,
+      (Route<dynamic> route) {
+        return false;
+      },
+    );
   }
 
   @override

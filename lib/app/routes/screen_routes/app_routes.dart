@@ -1,6 +1,7 @@
 import 'package:bta3_physia/app/routes/screen_routes/feature/app_startup_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/auth_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/home_routes.dart';
+import 'package:bta3_physia/app/routes/screen_routes/feature/main_navigation.dart';
 import 'package:flutter/material.dart';
 
 abstract final class AppRoutes {
@@ -9,6 +10,7 @@ abstract final class AppRoutes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     return AppStartupRoutes.generateRoute(settings) ??
         AuthRoutes.generateRoute(settings) ??
+        MainNavigationRoutes.generateRoute(settings) ??
         HomeRoutes.generateRoute(settings) ??
         _buildUnknownRoute(settings);
   }

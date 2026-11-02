@@ -68,10 +68,12 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
   }
 
   void _onCompleted() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(RouteNames.homeScreen, (Route<dynamic> route) {
-          return false;
-        });
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      RouteNames.mainNavigationScreen,
+      (Route<dynamic> route) {
+        return false;
+      },
+    );
   }
 
   String _primaryLabel(RegisterStep step) {
