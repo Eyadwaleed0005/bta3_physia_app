@@ -6,16 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // Routes build their cubit from the locator, so it has to be set up before
-  // any screen is pushed.
   setUpAll(() => setupServiceLocator());
 
-  /// Pumps at the Figma frame size (390x844 @3x) so overflow and asset
-  /// problems surface the way they would on a phone.
-  ///
-  /// Note: widget tests render with the 1em-wide test font, so Arabic lines
-  /// take more vertical room here than on a device — anything below the fold
-  /// is scrolled into view before it is tapped.
   Future<void> pumpApp(WidgetTester tester, {required String route}) async {
     tester.view.physicalSize = const Size(1170, 2532);
     tester.view.devicePixelRatio = 3;
@@ -33,7 +25,6 @@ void main() {
       ),
     );
 
-    // The wordmark SVG loads off the fake-async path.
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 400)),
     );
@@ -50,7 +41,6 @@ void main() {
     await tester.pump();
   }
 
-  /// Walks step 1 with valid data and lands on the grade step.
   Future<void> fillDetails(WidgetTester tester) async {
     await tester.enterText(fieldAt(0), 'محمود مجدي');
     await tester.enterText(fieldAt(1), 'student@bta3.com');
@@ -93,7 +83,6 @@ void main() {
       await tester.pump();
 
       await tapVisible(tester, find.text('تسجيل الدخول'));
-      // Past the placeholder request delay, then the route transition.
       await tester.pump(const Duration(milliseconds: 700));
       await tester.pumpAndSettle();
 
@@ -158,14 +147,19 @@ void main() {
 
       await fillDetails(tester);
 
-      // Back to step 1.
-      await tester.tap(find.byIcon(Icons.arrow_back_rounded));
+      // go to step 2.
+      await tester.tap(find.byIcon(Icons.arrow_forward));
       await tester.pumpAndSettle();
+      expect(find.text('ما صفّك الدراسي؟'), findsOneWidget);
+
+      // Back to step 1.
+      await tester.tap(find.byIcon(Icons.arrow_forward_ios));
+      await tester.pump();
       expect(find.text('إنشاء حساب جديد'), findsOneWidget);
 
       // Back out of registration, onto login.
-      await tester.tap(find.byIcon(Icons.arrow_back_rounded));
-      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.arrow_forward_ios));
+      await tester.pump();
       expect(find.text('هل أنت مستعدّ للبدء؟'), findsOneWidget);
     });
 

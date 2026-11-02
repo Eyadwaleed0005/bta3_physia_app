@@ -6,12 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // Skipping onboarding pushes the login route, which builds its cubit from
-  // the locator.
   setUpAll(() => setupServiceLocator());
 
-  /// Pumps the screen at the Figma frame size (390x844 @3x) so that overflow
-  /// and asset problems surface the same way they would on a phone.
   Future<void> pumpOnboarding(WidgetTester tester) async {
     tester.view.physicalSize = const Size(1170, 2532);
     tester.view.devicePixelRatio = 3;
@@ -23,14 +19,12 @@ void main() {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (BuildContext context, Widget? child) => MaterialApp(
-          // Skip pushes the login route by name.
           onGenerateRoute: AppRoutes.generateRoute,
           home: const OnboardingScreen(),
         ),
       ),
     );
 
-    // Lottie and the wordmark SVG load off the fake-async path.
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 400)),
     );
@@ -38,8 +32,6 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
   }
 
-  /// The visible Lottie repeats forever, so `pumpAndSettle` would time out.
-  /// The rocket timeline runs for 1400ms; pump past the swap and past the end.
   Future<void> settlePageChange(WidgetTester tester) async {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1000));
@@ -73,7 +65,6 @@ void main() {
     expect(find.text('كل خطوة تُحدث فرقًا.\nتابع تقدّمك.'), findsOneWidget);
     expect(find.text('ابدأ رحلتك'), findsOneWidget);
 
-    // Last page has no eyebrow, so the first page's must be gone.
     expect(find.text('مرحبًا بك في بتاع فيزيا'), findsNothing);
     expect(tester.takeException(), isNull);
   });
@@ -87,7 +78,6 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
-    // Still on page 1 — the button is the only way forward.
     expect(find.text('الفيزياء أبسط\nممّا تتخيّل.'), findsOneWidget);
     expect(find.text('التالي'), findsOneWidget);
     expect(tester.takeException(), isNull);
