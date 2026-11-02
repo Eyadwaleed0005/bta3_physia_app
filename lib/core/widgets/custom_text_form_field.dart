@@ -36,6 +36,16 @@ class CustomTextFormField extends StatefulWidget {
     this.autovalidateMode = AutovalidateMode.disabled,
     this.prefixIcon,
     this.obscureText = false,
+    this.errorText,
+    this.fillColor,
+    this.borderColor,
+    this.focusedBorderColor,
+    this.borderRadius,
+    this.textStyle,
+    this.hintStyle,
+    this.labelStyle,
+    this.cursorColor,
+    this.contentPadding,
   });
 
   final TextEditingController controller;
@@ -75,6 +85,17 @@ class CustomTextFormField extends StatefulWidget {
 
   final AutovalidateMode autovalidateMode;
 
+  final String? errorText;
+  final Color? fillColor;
+  final Color? borderColor;
+  final Color? focusedBorderColor;
+  final double? borderRadius;
+  final TextStyle? textStyle;
+  final TextStyle? hintStyle;
+  final TextStyle? labelStyle;
+  final Color? cursorColor;
+  final EdgeInsetsGeometry? contentPadding;
+
   @override
   State<CustomTextFormField> createState() {
     return _CustomTextFormFieldState();
@@ -92,7 +113,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     required double width,
   }) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(18.r),
+      borderRadius: BorderRadius.circular((widget.borderRadius ?? 18).r),
       borderSide: BorderSide(color: color, width: width.w),
     );
   }
@@ -221,9 +242,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           onSurface: ColorPalette.textPrimary,
         ),
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: ColorPalette.primary,
+          cursorColor: widget.cursorColor ?? ColorPalette.primary,
           selectionColor: ColorPalette.accent.withValues(alpha: 0.45),
-          selectionHandleColor: ColorPalette.primary,
+          selectionHandleColor: widget.cursorColor ?? ColorPalette.primary,
         ),
       ),
       child: Directionality(
@@ -243,10 +264,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           maxLength: widget.maxLength,
           textAlign: TextAlign.right,
           textDirection: widget.textDirection,
-          cursorColor: ColorPalette.primary,
+          cursorColor: widget.cursorColor ?? ColorPalette.primary,
           autofillHints: widget.autofillHints,
           autovalidateMode: widget.autovalidateMode,
-          style: AppTextStyle.font13TextPrimarySemiBoldTajawal(),
+          style:
+              widget.textStyle ??
+              AppTextStyle.font13TextPrimarySemiBoldTajawal(),
           validator: _validate,
           onTap: _handleTap,
           onChanged: _handleChanged,
@@ -275,13 +298,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               maxHeight: 56.h,
             ),
             hintText: widget.hintText,
-            hintStyle: AppTextStyle.font13TextSecondaryRegularTajawal(),
+            hintStyle:
+                widget.hintStyle ??
+                AppTextStyle.font13TextSecondaryRegularTajawal(),
+            errorText: widget.errorText,
             filled: true,
-            fillColor: ColorPalette.surface,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 20.w,
-              vertical: 17.h,
-            ),
+            fillColor: widget.fillColor ?? ColorPalette.surface,
+            contentPadding:
+                widget.contentPadding ??
+                EdgeInsets.symmetric(horizontal: 20.w, vertical: 17.h),
             suffixIcon: _buildSuffixIcon(),
             suffixIconConstraints: BoxConstraints(
               minWidth: 56.w,
@@ -289,9 +314,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               maxWidth: 56.w,
               maxHeight: 56.h,
             ),
-            enabledBorder: _buildBorder(color: ColorPalette.border, width: 1),
+            enabledBorder: _buildBorder(
+              color: widget.borderColor ?? ColorPalette.border,
+              width: 1,
+            ),
             focusedBorder: _buildBorder(
-              color: ColorPalette.primary,
+              color: widget.focusedBorderColor ?? ColorPalette.primary,
               width: 1.3,
             ),
             disabledBorder: _buildBorder(color: ColorPalette.divider, width: 1),
@@ -313,7 +341,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           widget.labelText!,
           textAlign: TextAlign.right,
           textDirection: TextDirection.rtl,
-          style: AppTextStyle.font13TextPrimarySemiBoldTajawal(),
+          style:
+              widget.labelStyle ??
+              AppTextStyle.font13TextPrimarySemiBoldTajawal(),
         ),
 
         verticalSpace(8),

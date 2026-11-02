@@ -1,3 +1,4 @@
+import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
 import 'package:bta3_physia/app/routes/screen_routes/app_routes.dart';
 import 'package:bta3_physia/features/app_startup/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  // Skipping onboarding pushes the login route, which builds its cubit from
+  // the locator.
+  setUpAll(() => setupServiceLocator());
+
   /// Pumps the screen at the Figma frame size (390x844 @3x) so that overflow
   /// and asset problems surface the same way they would on a phone.
   Future<void> pumpOnboarding(WidgetTester tester) async {

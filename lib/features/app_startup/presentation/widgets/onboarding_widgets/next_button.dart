@@ -1,6 +1,7 @@
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
+import 'package:bta3_physia/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,29 +28,25 @@ class NextButton extends StatelessWidget {
           child: child,
         );
       },
-      child: GestureDetector(
-        onTap: onPressed,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          width: double.infinity,
-          height: 60.h,
-          decoration: BoxDecoration(
-            color: ColorPalette.accent,
-            borderRadius: BorderRadius.circular(22.r),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            textDirection: TextDirection.ltr,
-            children: [
-              Text(label, style: AppTextStyle.font18TextPrimaryBoldTajawal()),
-              horizontalSpace(12),
-              Icon(
-                Icons.arrow_forward,
-                size: 18.r,
-                color: ColorPalette.textPrimary,
-              ),
-            ],
-          ),
+      child: CustomButton(
+        onPressed: onPressed,
+        height: 60.h,
+        background: ColorPalette.accent,
+        foreground: ColorPalette.textPrimary,
+        borderRadius: 22,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: TextDirection.ltr,
+          children: <Widget>[
+            Text(label, style: AppTextStyle.font18TextPrimaryBoldTajawal()),
+            horizontalSpace(12),
+            Icon(
+              Icons.arrow_forward,
+              size: 18.r,
+              color: ColorPalette.textPrimary,
+            ),
+          ],
         ),
       ),
     );

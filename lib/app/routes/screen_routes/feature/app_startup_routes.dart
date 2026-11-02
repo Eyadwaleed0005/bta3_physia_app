@@ -16,7 +16,7 @@ abstract final class AppStartupRoutes {
           },
         );
 
-      case RouteNames.onBoardingScreen:
+      case RouteNames.onboardingScreen:
         return MaterialPageRoute(
           settings: settings,
           builder: (_) {

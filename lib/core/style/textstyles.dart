@@ -734,6 +734,16 @@ class AppTextStyle {
     );
   }
 
+  static TextStyle font17TextHighlightRegularTajawal() {
+    return TextStyle(
+      fontSize: 17.sp,
+      fontWeight: FontWeightHelper.regular,
+      fontFamily: tajawal,
+      color: ColorPalette.textHighLight, // #D6FB00
+      height: 1.5,
+    );
+  }
+
   static TextStyle font17TextSecondaryBoldTajawal() {
     return TextStyle(
       fontSize: 17.sp,
@@ -751,6 +761,16 @@ class AppTextStyle {
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
       color: ColorPalette.textMuted, // #B8D9D7
+      height: 1.5,
+    );
+  }
+
+  static TextStyle font18TextLightRegularTajawal() {
+    return TextStyle(
+      fontSize: 18.sp,
+      fontWeight: FontWeightHelper.regular,
+      fontFamily: tajawal,
+      color: ColorPalette.textLight, // #F8F8FF
       height: 1.5,
     );
   }

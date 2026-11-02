@@ -13,6 +13,7 @@ class AppImage {
   final String baseIcons = 'assets/icons/';
 
   // ===== images =====
+  late final String wordMark = '${baseImages}onboarding_wordmark.svg';
 
   // ===== icons =====
   late final String rocketIcon = '${baseIcons}Rocket.svg';
