@@ -63,16 +63,29 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
     final bool moved = context.read<RegisterCubit>().goBack();
 
     if (!moved) {
-      Navigator.of(context).maybePop();
+      // Leaving the flow from step 1 is the `Register → Login` move.
+      _onSignIn();
     }
   }
 
-  void _onCompleted() {
+  /// Figma plays the electric sweep over the register screen and reveals login,
+  /// so the handover always pushes a fresh login rather than popping back onto
+  /// the one the flow was entered from.
+  void _onSignIn() {
     Navigator.of(context).pushNamedAndRemoveUntil(
-      RouteNames.mainNavigationScreen,
+      RouteNames.loginScreen,
       (Route<dynamic> route) {
         return false;
       },
+    );
+  }
+
+  /// Called when [RegisterCompleted] fires — navigate to the success screen
+  /// via the electric transition (registered in [AuthRoutes]).
+  void _onCompleted() {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      RouteNames.registerSuccessScreen,
+      (Route<dynamic> route) => false,
     );
   }
 
@@ -123,9 +136,8 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterCubit, RegisterState>(
-      listenWhen: (RegisterState previous, RegisterState current) {
-        return current is RegisterCompleted;
-      },
+      listenWhen: (RegisterState previous, RegisterState current) =>
+          current is RegisterCompleted,
       listener: (BuildContext context, RegisterState state) {
         _onCompleted();
       },
@@ -134,6 +146,8 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: BlocBuilder<RegisterCubit, RegisterState>(
+              buildWhen: (RegisterState previous, RegisterState current) =>
+                  current is! RegisterCompleted,
               builder: (BuildContext context, RegisterState state) {
                 final RegisterFormState form = state is RegisterFormState
                     ? state
@@ -172,6 +186,7 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
                     RegisterActions(
                       label: _primaryLabel(form.step),
                       onPressed: () => _onPrimary(form.step),
+                      onSignIn: _onSignIn,
                       isLoading: form.isSubmitting,
                     ),
                     verticalSpace(18),

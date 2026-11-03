@@ -1,3 +1,4 @@
+import 'package:bta3_physia/app/routes/app_images_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -29,7 +30,7 @@ class _SplashScreenContentState extends State<SplashScreenContent>
   Widget build(BuildContext context) {
     return Center(
       child: Lottie.asset(
-        'assets/animations/splash.json',
+        AppImage().splash,
         controller: _controller,
         width: double.infinity,
         fit: BoxFit.fill,

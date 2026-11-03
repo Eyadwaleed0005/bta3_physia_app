@@ -103,7 +103,7 @@ void main() {
   });
 
   group('Register', () {
-    testWidgets('walks the three steps and finishes on home', (
+    testWidgets('walks the three steps and finishes on the success screen', (
       WidgetTester tester,
     ) async {
       await pumpApp(tester, route: RouteNames.registerScreen);
@@ -131,10 +131,19 @@ void main() {
       await tester.pump();
 
       await tapVisible(tester, find.text('إنشاء الحساب'));
-      await tester.pump(const Duration(milliseconds: 700));
       await tester.pumpAndSettle();
 
-      expect(find.text('home screen'), findsOneWidget);
+      // `Register 04 / Success` — the account exists, so the steps are gone.
+      expect(find.text('حسابك جاهز!'), findsOneWidget);
+      expect(find.text('الخطوة ٣ من ٣'), findsNothing);
+      expect(find.text('home screen'), findsNothing);
+
+      // Its primary action hands over to login. Login's brand mark pulses
+      // forever, so the transition is pumped by duration instead of settled.
+      await tapVisible(tester, find.text('تسجيل الدخول'));
+      await tester.pump(const Duration(milliseconds: 700));
+
+      expect(find.text('هل أنت مستعدّ للبدء؟'), findsOneWidget);
     });
 
     testWidgets('going back moves between steps, then leaves the flow', (
@@ -160,6 +169,7 @@ void main() {
       // Back out of registration, onto login.
       await tester.tap(find.byIcon(Icons.arrow_forward_ios));
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
       expect(find.text('هل أنت مستعدّ للبدء؟'), findsOneWidget);
     });
 

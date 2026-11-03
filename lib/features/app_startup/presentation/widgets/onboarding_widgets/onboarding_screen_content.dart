@@ -123,11 +123,17 @@ class _OnboardingScreenContentState extends State<OnboardingScreenContent>
     if (_running) {
       return;
     }
-    Navigator.of(context).pushReplacementNamed(RouteNames.loginScreen);
+    Navigator.of(context).pushReplacementNamed(
+      RouteNames.loginScreen,
+      arguments: {'skipElectricTransition': true},
+    );
   }
 
   void _onFinish() {
-    Navigator.of(context).pushReplacementNamed(RouteNames.loginScreen);
+    Navigator.of(context).pushReplacementNamed(
+      RouteNames.loginScreen,
+      arguments: {'skipElectricTransition': true},
+    );
   }
 
   void _onTransitionTick() {

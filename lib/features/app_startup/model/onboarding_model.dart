@@ -1,3 +1,4 @@
+import 'package:bta3_physia/app/routes/app_images_routes.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -28,9 +29,9 @@ class OnboardingModel {
   final String buttonLabel;
 }
 
-const List<OnboardingModel> onboardingPages = <OnboardingModel>[
+List<OnboardingModel> onboardingPages = <OnboardingModel>[
   OnboardingModel(
-    animation: 'assets/animations/Onboarding_bulb_1.json',
+    animation: AppImage().onboardingBulb1,
     background: ColorPalette.screenBackground,
     caption: 'جمال محمد — بتاع فيزيا',
     captionColor: ColorPalette.textSecondary,
@@ -41,7 +42,7 @@ const List<OnboardingModel> onboardingPages = <OnboardingModel>[
     buttonLabel: 'التالي',
   ),
   OnboardingModel(
-    animation: 'assets/animations/Onboarding_bulb_1.json',
+    animation: AppImage().onboardingBulb1,
     background: ColorPalette.screenBackgroundAlt,
     caption: 'تجربة البندول البسيط',
     captionColor: ColorPalette.textSecondary,
@@ -51,7 +52,7 @@ const List<OnboardingModel> onboardingPages = <OnboardingModel>[
     buttonLabel: 'التالي',
   ),
   OnboardingModel(
-    animation: 'assets/animations/Onboarding_Growing_columns_3.json',
+    animation: AppImage().onboardingGrowingColumns3,
     background: ColorPalette.screenBackgroundDeep,
     caption: 'تعرّف على مستواك، وتقدّم بثقة.',
     captionColor: ColorPalette.textHighLight,

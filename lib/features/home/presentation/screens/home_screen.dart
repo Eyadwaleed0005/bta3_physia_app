@@ -4,7 +4,6 @@ import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Placeholder landing screen shown once authentication finishes.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

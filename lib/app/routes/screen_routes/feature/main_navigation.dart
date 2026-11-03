@@ -1,3 +1,4 @@
+import 'package:bta3_physia/app/routes/screen_routes/feature/auth_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
 import 'package:bta3_physia/features/main_navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,9 @@ abstract final class MainNavigationRoutes {
             ? settings.arguments! as int
             : 0;
 
-        return MaterialPageRoute(
+        return AuthRoutes.electricRoute(
           settings: settings,
-          builder: (_) {
-            return MainNavigationScreen(initialIndex: initialIndex);
-          },
+          screen: MainNavigationScreen(initialIndex: initialIndex),
         );
 
       default:
