@@ -1,4 +1,3 @@
-import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/features/courses/presentation/screens/courses_screen.dart';
 import 'package:bta3_physia/features/home/presentation/screens/home_screen.dart';
 import 'package:bta3_physia/features/live/presentation/screens/live_screen.dart';
@@ -23,19 +22,26 @@ class MainNavigationScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           BottomNavigationCubit()..changeIndex(validInitialIndex),
-      child: Scaffold(
-        extendBody: true,
-        backgroundColor: ColorPalette.background,
-        body: BlocBuilder<BottomNavigationCubit, int>(
-          builder: (BuildContext context, int selectedIndex) {
-            final int currentIndex = selectedIndex.clamp(0, _screensCount - 1);
-            return KeyedSubtree(
-              key: ValueKey<String>(_screenKey(currentIndex: currentIndex)),
-              child: _buildScreen(context: context, currentIndex: currentIndex),
-            );
-          },
+      child: SafeArea(
+        child: Scaffold(
+          extendBody: true,
+          body: BlocBuilder<BottomNavigationCubit, int>(
+            builder: (BuildContext context, int selectedIndex) {
+              final int currentIndex = selectedIndex.clamp(
+                0,
+                _screensCount - 1,
+              );
+              return KeyedSubtree(
+                key: ValueKey<String>(_screenKey(currentIndex: currentIndex)),
+                child: _buildScreen(
+                  context: context,
+                  currentIndex: currentIndex,
+                ),
+              );
+            },
+          ),
+          bottomNavigationBar: const CustomBottomNavBar(),
         ),
-        bottomNavigationBar: const CustomBottomNavBar(),
       ),
     );
   }

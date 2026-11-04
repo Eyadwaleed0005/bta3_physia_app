@@ -1,7 +1,6 @@
 import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
-import 'package:bta3_physia/core/style/app_animations.dart';
-import 'package:bta3_physia/core/transition/electric_transition.dart';
+import 'package:bta3_physia/core/transition/app_transition.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:bta3_physia/features/auth/presentation/screens/login/login_screen.dart';
@@ -12,39 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract final class AuthRoutes {
   const AuthRoutes._();
-
-  static PageRouteBuilder<void> electricRoute({
-    required Widget screen,
-    RouteSettings? settings,
-  }) {
-    return PageRouteBuilder<void>(
-      settings: settings,
-      transitionDuration: ElectricTransition.duration,
-      reverseTransitionDuration: ElectricTransition.duration,
-      pageBuilder: (_, __, ___) => screen,
-      transitionsBuilder:
-          (
-            _,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) {
-            return ElectricTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
-            );
-          },
-    );
-  }
-
-  static Route<dynamic> simpleRoute({
-    required Widget screen,
-    RouteSettings? settings,
-  }) {
-    return AppAnimations.screenFade(screen: screen, duration: 380);
-  }
-
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final bool skipElectric =
         settings.arguments is Map<String, dynamic> &&
@@ -56,7 +22,9 @@ abstract final class AuthRoutes {
       required Widget screen,
       RouteSettings? settings,
     })
-    routeBuilder = skipElectric ? simpleRoute : electricRoute;
+    routeBuilder = skipElectric
+        ? AppTransition.simpleTransition
+        : AppTransition.electricTransition;
 
     switch (settings.name) {
       case RouteNames.loginScreen:

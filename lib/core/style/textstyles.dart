@@ -151,7 +151,7 @@ class AppTextStyle {
       fontSize: 13.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textSecondary,
+      color: ColorPalette.textMuted,
     );
   }
 
@@ -587,33 +587,31 @@ class AppTextStyle {
     );
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // Figma — section "01 — الشاشات الرئيسية / Main screens"
-  // Extracted from node 174:10376. 819 text nodes resolve to 27 distinct styles,
-  // all with lineHeight = 1.5 × fontSize, letterSpacing 0, and either Tajawal or
-  // Alexandria. Weights are only 400 (regular) and 700 (bold) — no medium or
-  // semibold appears anywhere in this section.
-  // The styles below are the non-redundant set, named by their dominant colour.
-  // ─────────────────────────────────────────────────────────────────────────
-
-  // 11pt — smallest supporting copy and accent badges
   static TextStyle font11TextMutedRegularTajawal() {
     return TextStyle(
       fontSize: 11.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textMuted, // #B8D9D7 · 105 uses
+      color: ColorPalette.textMuted,
       height: 1.5,
     );
   }
 
-  // 12pt
+  static TextStyle font11TextPrimaryBoldTajawal() {
+    return TextStyle(
+      fontSize: 11.sp,
+      fontWeight: FontWeightHelper.bold,
+      fontFamily: tajawal,
+      color: ColorPalette.primary,
+    );
+  }
+
   static TextStyle font12TextMutedRegularTajawal() {
     return TextStyle(
       fontSize: 12.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textMuted, // #B8D9D7
+      color: ColorPalette.textMuted,
       height: 1.5,
     );
   }
@@ -623,7 +621,7 @@ class AppTextStyle {
       fontSize: 12.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textSecondary, // #4BC7D8
+      color: ColorPalette.textSecondary,
       height: 1.5,
     );
   }
@@ -633,18 +631,17 @@ class AppTextStyle {
       fontSize: 12.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
 
-  // 13pt
   static TextStyle font13TextLightBoldTajawal() {
     return TextStyle(
       fontSize: 13.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF · 33 uses
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
@@ -654,29 +651,36 @@ class AppTextStyle {
       fontSize: 13.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textSecondary, // #4BC7D8
+      color: ColorPalette.textSecondary,
       height: 1.5,
     );
   }
 
-  /// "Training / Required answer" badge — the only orange text in the section.
+  static TextStyle font13TextHighLightBoldTajawal() {
+    return TextStyle(
+      fontSize: 13.sp,
+      fontWeight: FontWeightHelper.bold,
+      fontFamily: tajawal,
+      color: ColorPalette.textHighLight,
+    );
+  }
+
   static TextStyle font13RequiredRegularTajawal() {
     return TextStyle(
       fontSize: 13.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.requiredAnswer, // #FF9354
+      color: ColorPalette.requiredAnswer,
       height: 1.5,
     );
   }
 
-  // 14pt
   static TextStyle font14TextMutedRegularTajawal() {
     return TextStyle(
       fontSize: 14.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textMuted, // #B8D9D7 · 46 uses
+      color: ColorPalette.textMuted,
       height: 1.5,
     );
   }
@@ -686,7 +690,7 @@ class AppTextStyle {
       fontSize: 14.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textPrimary, // #051F20
+      color: ColorPalette.textPrimary,
       height: 1.5,
     );
   }
@@ -696,40 +700,37 @@ class AppTextStyle {
       fontSize: 14.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textHighLight, // #D6FB00
+      color: ColorPalette.textHighLight,
       height: 1.5,
     );
   }
 
-  // 15pt
   static TextStyle font15TextMutedRegularTajawal() {
     return TextStyle(
       fontSize: 15.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textMuted, // #B8D9D7
+      color: ColorPalette.textMuted,
       height: 1.5,
     );
   }
 
-  // 16pt — the most common size in the section (114 nodes at bold)
   static TextStyle font16TextMutedRegularTajawal() {
     return TextStyle(
       fontSize: 16.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textMuted, // #B8D9D7
+      color: ColorPalette.textMuted,
       height: 1.5,
     );
   }
 
-  // 17pt
   static TextStyle font17TextMutedRegularTajawal() {
     return TextStyle(
       fontSize: 17.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textMuted, // #B8D9D7
+      color: ColorPalette.textMuted,
       height: 1.5,
     );
   }
@@ -739,7 +740,7 @@ class AppTextStyle {
       fontSize: 17.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textHighLight, // #D6FB00
+      color: ColorPalette.textHighLight,
       height: 1.5,
     );
   }
@@ -749,18 +750,17 @@ class AppTextStyle {
       fontSize: 17.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textSecondary, // #4BC7D8
+      color: ColorPalette.textSecondary,
       height: 1.5,
     );
   }
 
-  // 18pt
   static TextStyle font18TextMutedRegularTajawal() {
     return TextStyle(
       fontSize: 18.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textMuted, // #B8D9D7
+      color: ColorPalette.textMuted,
       height: 1.5,
     );
   }
@@ -770,7 +770,7 @@ class AppTextStyle {
       fontSize: 18.sp,
       fontWeight: FontWeightHelper.regular,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
@@ -780,29 +780,27 @@ class AppTextStyle {
       fontSize: 18.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textPrimary, // #051F20
+      color: ColorPalette.textPrimary,
       height: 1.5,
     );
   }
 
-  // 19pt
   static TextStyle font19TextLightBoldTajawal() {
     return TextStyle(
       fontSize: 19.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
 
-  // 20pt+
   static TextStyle font20TextLightBoldTajawal() {
     return TextStyle(
       fontSize: 20.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
@@ -812,7 +810,7 @@ class AppTextStyle {
       fontSize: 20.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textHighLight, // #D6FB00
+      color: ColorPalette.textHighLight,
       height: 1.5,
     );
   }
@@ -822,7 +820,7 @@ class AppTextStyle {
       fontSize: 22.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF · screen headings
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
@@ -832,7 +830,7 @@ class AppTextStyle {
       fontSize: 24.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
@@ -842,20 +840,17 @@ class AppTextStyle {
       fontSize: 30.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
 
-  // Alexandria — display numerals (Splash countdown, Progress percentage).
-  // Requires the Alexandria font to be added to pubspec.yaml, see [alexandria].
-  // Used by the onboarding "message" block and hero caption.
   static TextStyle font14TextSecondaryBoldTajawal() {
     return TextStyle(
       fontSize: 14.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textSecondary, // #4BC7D8 · "eyebrow" line
+      color: ColorPalette.textSecondary,
       height: 1.5,
     );
   }
@@ -865,7 +860,7 @@ class AppTextStyle {
       fontSize: 16.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textSecondary, // #4BC7D8 · hero caption
+      color: ColorPalette.textSecondary,
       height: 1.5,
     );
   }
@@ -875,7 +870,7 @@ class AppTextStyle {
       fontSize: 16.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: tajawal,
-      color: ColorPalette.textHighLight, // #D6FB00 · hero caption, final page
+      color: ColorPalette.textHighLight,
       height: 1.5,
     );
   }
@@ -885,7 +880,7 @@ class AppTextStyle {
       fontSize: 26.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: alexandria,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }
@@ -895,7 +890,7 @@ class AppTextStyle {
       fontSize: 29.sp,
       fontWeight: FontWeightHelper.bold,
       fontFamily: alexandria,
-      color: ColorPalette.textLight, // #F8F8FF
+      color: ColorPalette.textLight,
       height: 1.5,
     );
   }

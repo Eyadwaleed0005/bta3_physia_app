@@ -7,4 +7,6 @@ abstract final class RouteNames {
   static const String registerSuccessScreen = '/register_success_screen';
   static const String mainNavigationScreen = '/mainNavigationScreen';
   static const String homeScreen = '/home_screen';
+  static const String notificationsScreen = '/notifications_screen';
+  static const String examsScreen = '/exams_screen';
 }

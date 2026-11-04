@@ -110,35 +110,26 @@ class ColorPalette {
   static const Color softSage = teal100;
   static const Color paleMint = teal50;
 
-  // Screen background — #051F20 on 43 of 44 screens.
   static const Color screenBackground = teal600;
 
-  // Two screens intentionally differ, plus the animated Splash gradient.
-  static const Color screenBackgroundAlt =
-      teal500; // #0B2B28 · "Simple Pendulum"
-  static const Color screenBackgroundDeep = teal700; // #00545F · "Progress"
+  static const Color screenBackgroundAlt = teal500; // #0B2B28 ·
+  static const Color screenBackgroundDeep = teal700; // #00545F
 
-  // Glass / panel surface — #124248, 157 uses ("Glass / Envelope", cards).
   static const Color panelGlass = teal400;
-  // Wave / transition fill — #0B2B28, 146 uses ("Transition / color wave").
   static const Color transitionFill = teal500;
 
-  // Input fields — fill #0B2B28 with a #28767C stroke (all Register + Auth fields).
   static const Color fieldFill = teal500;
   static const Color fieldBorder = teal300;
 
-  // Accent + state
-  static const Color corona = cyan300; // #69DEFF · arc/curve strokes, 518 uses
-  static const Color requiredAnswer = orange300; // #FF9354 · "Required answer"
+  static const Color corona = cyan300; // #69DEFF
+  static const Color requiredAnswer = orange300; // #FF9354
 
-  // Home indicator bar — #B8D9D7.
   static const Color homeIndicator = teal100;
 
-  static const Color wine200 = teal200; // #4BC7D8 · was a rose tone
-  static const Color wine600 = teal600; // #051F20 · was a deep maroon
-  static const Color gold300 =
-      lime200; // #D6FB00 · was gold, now the lime accent
-  static const Color cream50 = white; // #F8F8FF · was cream, now off-white
+  static const Color wine200 = teal200; // #4BC7D8
+  static const Color wine600 = teal600; // #051F20
+  static const Color gold300 = lime200; // #D6FB00
+  static const Color cream50 = white; // #F8F8FF
 
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
