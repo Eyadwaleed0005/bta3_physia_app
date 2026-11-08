@@ -1,3 +1,4 @@
+import 'package:bta3_physia/app/routes/app_images_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -58,7 +59,7 @@ class RocketVeil extends StatelessWidget {
                           width: 64.w,
                           height: 104.h,
                           child: SvgPicture.asset(
-                            'assets/icons/Rocket.svg',
+                            AppImage().rocketIcon,
                             fit: BoxFit.contain,
                           ),
                         ),

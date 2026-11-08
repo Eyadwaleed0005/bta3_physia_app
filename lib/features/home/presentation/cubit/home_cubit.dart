@@ -11,7 +11,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void refresh() {
     emit(state.copyWith(viewMode: HomeViewMode.loading));
-    Future.delayed(const Duration(milliseconds: 2000), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       if (!isClosed) {
         emit(state.copyWith(viewMode: HomeViewMode.contentWithLive));
       }

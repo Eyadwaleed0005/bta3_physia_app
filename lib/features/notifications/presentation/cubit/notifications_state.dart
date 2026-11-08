@@ -12,8 +12,8 @@ enum NotificationsViewMode {
 
 enum NotificationFilter { all, unreadOnly }
 
-class ExamsState extends Equatable {
-  const ExamsState({
+class NotificationsState extends Equatable {
+  const NotificationsState({
     this.viewMode = NotificationsViewMode.list,
     this.filter = NotificationFilter.all,
     this.items = const [],
@@ -34,13 +34,13 @@ class ExamsState extends Equatable {
     return items;
   }
 
-  ExamsState copyWith({
+  NotificationsState copyWith({
     NotificationsViewMode? viewMode,
     NotificationFilter? filter,
     List<NotificationItemModel>? items,
     String? grade,
   }) {
-    return ExamsState(
+    return NotificationsState(
       viewMode: viewMode ?? this.viewMode,
       filter: filter ?? this.filter,
       items: items ?? this.items,

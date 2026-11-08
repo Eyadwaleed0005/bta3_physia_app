@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ExamsCubit extends Cubit<ExamsState> {
   ExamsCubit({
     ExamsViewMode viewMode = ExamsViewMode.available,
-    List<ExamsModel> items = const [],
-  }) : super(ExamsState(viewMode: viewMode, items: items));
+    List<ExamsModel>? items,
+  }) : super(ExamsState(viewMode: viewMode, items: ExamsModel.defaultItems()));
 
   void setViewMode(ExamsViewMode mode) {
     emit(state.copyWith(viewMode: mode));

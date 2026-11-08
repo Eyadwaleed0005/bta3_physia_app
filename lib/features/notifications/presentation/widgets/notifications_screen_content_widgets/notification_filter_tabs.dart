@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BuildFilterTabs extends StatelessWidget {
-  final ExamsState state;
-  const BuildFilterTabs({super.key, required this.state});
+class NotificationFilterTabs extends StatelessWidget {
+  final NotificationsState state;
+  const NotificationFilterTabs({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:bta3_physia/app/routes/app_images_routes.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,10 +29,7 @@ class TopBar extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: SvgPicture.asset(
-              'assets/images/onboarding_wordmark.svg',
-              height: 54.h,
-            ),
+            child: SvgPicture.asset(AppImage().wordMark, height: 54.h),
           ),
         ],
       ),

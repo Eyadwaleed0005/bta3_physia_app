@@ -3,6 +3,8 @@ import 'package:bta3_physia/app/routes/screen_routes/feature/auth_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/exam_route.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/home_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/main_navigation.dart';
+import 'package:bta3_physia/app/routes/screen_routes/feature/notifications_routes.dart';
+import 'package:bta3_physia/app/routes/screen_routes/feature/results_routes.dart';
 import 'package:flutter/material.dart';
 
 abstract final class AppRoutes {
@@ -13,7 +15,9 @@ abstract final class AppRoutes {
         AuthRoutes.generateRoute(settings) ??
         MainNavigationRoutes.generateRoute(settings) ??
         HomeRoutes.generateRoute(settings) ??
+        NotificationsRoutes.generateRoute(settings) ??
         ExamRoutes.generateRoute(settings) ??
+        ResultsRoutes.generateRoute(settings) ??
         _buildUnknownRoute(settings);
   }
 

@@ -1,10 +1,10 @@
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/features/notifications/presentation/cubit/notifications_cubit.dart';
 import 'package:bta3_physia/features/notifications/presentation/cubit/notifications_state.dart';
-import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/build_app_bar.dart';
-import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/build_filter_tabs.dart';
-import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/build_notification_body_for_mode.dart';
-import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/build_sub_header.dart';
+import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/notification_app_bar.dart';
+import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/notification_filter_tabs.dart';
+import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/notification_body_for_mode.dart';
+import 'package:bta3_physia/features/notifications/presentation/widgets/notifications_screen_content_widgets/notification_sub_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +14,7 @@ class NotificationsScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NotificationsCubit, ExamsState>(
+    return BlocBuilder<NotificationsCubit, NotificationsState>(
       builder: (context, state) {
         final isPermissionState =
             state.viewMode == NotificationsViewMode.permission;
@@ -24,15 +24,15 @@ class NotificationsScreenContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // App Bar
-              BuildAppBar(state: state, isPermission: isPermissionState),
+              NotificationAppBar(state: state, isPermission: isPermissionState),
 
               verticalSpace(16),
 
               // Filter Tabs (only in list mode)
               if (state.viewMode == NotificationsViewMode.list) ...[
-                BuildFilterTabs(state: state),
+                NotificationFilterTabs(state: state),
                 verticalSpace(14),
-                BuildSubHeader(state: state),
+                NotificationSubHeader(state: state),
                 verticalSpace(14),
               ],
 
@@ -40,7 +40,7 @@ class NotificationsScreenContent extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: BuildNotificationBodyForMode(state: state),
+                  child: NotificationBodyForMode(state: state),
                 ),
               ),
             ],

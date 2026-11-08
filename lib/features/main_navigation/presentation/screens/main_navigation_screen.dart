@@ -1,27 +1,45 @@
+import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
 import 'package:bta3_physia/features/courses/presentation/screens/courses_screen.dart';
+import 'package:bta3_physia/features/home/presentation/cubit/home_cubit.dart';
 import 'package:bta3_physia/features/home/presentation/screens/home_screen.dart';
 import 'package:bta3_physia/features/live/presentation/screens/live_screen.dart';
 import 'package:bta3_physia/features/main_navigation/presentation/cubit/bottom_navigation_cubit.dart';
+import 'package:bta3_physia/core/constant/main_navigation_tabs.dart';
 import 'package:bta3_physia/features/main_navigation/presentation/widgets/custom_bottom_nav_bar.dart';
 import 'package:bta3_physia/features/profile/presentation/screens/profile_screen.dart';
+import 'package:bta3_physia/features/results/presentation/cubit/results_cubit.dart';
 import 'package:bta3_physia/features/results/presentation/screens/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MainNavigationScreen extends StatelessWidget {
-  const MainNavigationScreen({super.key, this.initialIndex = 2});
+class MainNavigationScreen extends StatefulWidget {
+  const MainNavigationScreen({
+    super.key,
+    this.initialIndex = MainNavigationTabs.home,
+  });
 
   final int initialIndex;
 
-  static const int _screensCount = 5;
+  @override
+  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
+}
+
+class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  /// نفس النسخة المشتركة في `getIt`، حتى تستطيع الشاشات المدفوعة فوق التنقل
+  /// (مثل نتيجة الامتحان) تغيير التبويب ثم العودة إلى هذه الشاشة.
+  late final BottomNavigationCubit _bottomNavigationCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _bottomNavigationCubit = getIt<BottomNavigationCubit>()
+      ..changeIndex(widget.initialIndex.clamp(0, MainNavigationTabs.count - 1));
+  }
 
   @override
   Widget build(BuildContext context) {
-    final int validInitialIndex = initialIndex.clamp(0, _screensCount - 1);
-
-    return BlocProvider(
-      create: (context) =>
-          BottomNavigationCubit()..changeIndex(validInitialIndex),
+    return BlocProvider<BottomNavigationCubit>.value(
+      value: _bottomNavigationCubit,
       child: SafeArea(
         child: Scaffold(
           extendBody: true,
@@ -29,7 +47,7 @@ class MainNavigationScreen extends StatelessWidget {
             builder: (BuildContext context, int selectedIndex) {
               final int currentIndex = selectedIndex.clamp(
                 0,
-                _screensCount - 1,
+                MainNavigationTabs.count - 1,
               );
               return KeyedSubtree(
                 key: ValueKey<String>(_screenKey(currentIndex: currentIndex)),
@@ -51,37 +69,46 @@ class MainNavigationScreen extends StatelessWidget {
     required int currentIndex,
   }) {
     switch (currentIndex) {
-      case 0:
-        return const HomeScreen();
+      case MainNavigationTabs.home:
+        return BlocProvider(
+          create: (context) => getIt<HomeCubit>(),
+          child: const HomeScreen(),
+        );
 
-      case 1:
+      case MainNavigationTabs.courses:
         return const CoursesScreen();
 
-      case 2:
+      case MainNavigationTabs.live:
         return const LiveScreen();
 
-      case 3:
-        return const ResultsScreen();
+      case MainNavigationTabs.results:
+        return BlocProvider(
+          create: (context) => getIt<ResultsCubit>(),
+          child: const ResultsScreen(),
+        );
 
-      case 4:
+      case MainNavigationTabs.profile:
         return const ProfileScreen();
 
       default:
-        return const HomeScreen();
+        return BlocProvider(
+          create: (context) => getIt<HomeCubit>(),
+          child: const HomeScreen(),
+        );
     }
   }
 
   String _screenKey({required int currentIndex}) {
     switch (currentIndex) {
-      case 0:
+      case MainNavigationTabs.home:
         return 'screen_$currentIndex';
-      case 1:
+      case MainNavigationTabs.courses:
         return 'screen_$currentIndex';
-      case 2:
+      case MainNavigationTabs.live:
         return 'screen_$currentIndex';
-      case 3:
+      case MainNavigationTabs.results:
         return 'screen_$currentIndex';
-      case 4:
+      case MainNavigationTabs.profile:
         return 'screen_$currentIndex';
       default:
         return 'screen_$currentIndex';

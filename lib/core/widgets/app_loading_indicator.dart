@@ -1,4 +1,6 @@
+import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
+import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:m3e_progress_indicator/m3e_progress_indicator.dart';
@@ -12,6 +14,7 @@ class AppLoadingIndicator extends StatelessWidget {
     this.strokeWidth = 3,
     this.wavelength = 12,
     this.waveSpeed = 10,
+    this.title = 'جارٍ التحميل',
   });
 
   final Color color;
@@ -20,18 +23,27 @@ class AppLoadingIndicator extends StatelessWidget {
   final double strokeWidth;
   final double wavelength;
   final double waveSpeed;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return M3ECircularWavyProgressIndicator(
-      value: null,
-      color: color,
-      backgroundColor: backgroundColor,
-      size: size.r,
-      strokeWidth: strokeWidth.w,
-      trackStrokeWidth: strokeWidth.w,
-      wavelength: wavelength,
-      waveSpeed: waveSpeed,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        M3ECircularWavyProgressIndicator(
+          value: null,
+          color: color,
+          backgroundColor: backgroundColor,
+          size: size.r,
+          strokeWidth: strokeWidth.w,
+          trackStrokeWidth: strokeWidth.w,
+          wavelength: wavelength,
+          waveSpeed: waveSpeed,
+        ),
+        horizontalSpace(8),
+        Text(title, style: AppTextStyle.font16TextPrimaryBoldTajawal()),
+      ],
     );
   }
 }

@@ -11,9 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BuildNotificationBodyForMode extends StatelessWidget {
-  final ExamsState state;
-  const BuildNotificationBodyForMode({super.key, required this.state});
+class NotificationBodyForMode extends StatelessWidget {
+  final NotificationsState state;
+  const NotificationBodyForMode({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,10 @@ class BuildNotificationBodyForMode extends StatelessWidget {
 
     switch (state.viewMode) {
       case NotificationsViewMode.loading:
-        return const NotificationsLoadingState();
+        return Padding(
+          padding: EdgeInsets.only(top: 24.h),
+          child: const NotificationsLoadingState(),
+        );
 
       case NotificationsViewMode.empty:
         return Padding(

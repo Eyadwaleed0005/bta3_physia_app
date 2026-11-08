@@ -6,8 +6,6 @@ class ExamsModel extends Equatable {
     required this.title,
     required this.totlaQuestions,
     required this.totalDegrees,
-    required this.examInformation,
-
     required this.time,
     this.isCompleted = false,
   });
@@ -18,7 +16,6 @@ class ExamsModel extends Equatable {
   final int totalDegrees;
   final String time;
   final bool isCompleted;
-  final ExamInformationModel examInformation;
 
   ExamsModel copyWith({
     String? id,
@@ -28,7 +25,6 @@ class ExamsModel extends Equatable {
     int? totalDegrees,
 
     bool? isCompleted,
-    ExamInformationModel? examInformation,
   }) {
     return ExamsModel(
       id: id ?? this.id,
@@ -37,7 +33,6 @@ class ExamsModel extends Equatable {
       time: time ?? this.time,
       isCompleted: isCompleted ?? this.isCompleted,
       totalDegrees: totalDegrees ?? this.totalDegrees,
-      examInformation: examInformation ?? this.examInformation,
     );
   }
 
@@ -45,43 +40,51 @@ class ExamsModel extends Equatable {
   List<Object?> get props => [id, title, totlaQuestions, time, isCompleted];
 
   static List<ExamsModel> defaultItems() {
-    return const [];
+    return const [
+      ExamsModel(
+        id: "1",
+        title: "امتحان 1",
+        totlaQuestions: 20,
+        totalDegrees: 60,
+        time: "60",
+        isCompleted: false,
+      ),
+      ExamsModel(
+        id: "2",
+        title: "امتحان 2",
+        totlaQuestions: 20,
+        totalDegrees: 60,
+
+        time: "45",
+        isCompleted: false,
+      ),
+      ExamsModel(
+        id: "3",
+        title: "امتحان 3",
+        totlaQuestions: 20,
+        totalDegrees: 60,
+
+        time: "60",
+        isCompleted: false,
+      ),
+      ExamsModel(
+        id: "4",
+        title: "امتحان 4",
+        totlaQuestions: 20,
+        totalDegrees: 60,
+
+        time: "60",
+        isCompleted: false,
+      ),
+      ExamsModel(
+        id: "5",
+        title: "امتحان 5",
+        totlaQuestions: 20,
+        totalDegrees: 60,
+
+        time: "60",
+        isCompleted: false,
+      ),
+    ];
   }
-}
-
-class ExamInformationModel extends Equatable {
-  final int numOfDegreesPerQuestion;
-  final String questionText;
-  final List<String> answersText;
-  final List<int> correctAnswersIndex;
-
-  const ExamInformationModel({
-    required this.numOfDegreesPerQuestion,
-    required this.questionText,
-    required this.answersText,
-    required this.correctAnswersIndex,
-  });
-
-  ExamInformationModel copyWith({
-    int? numOfDegreesPerQuestion,
-    String? questionText,
-    List<String>? answersText,
-    List<int>? correctAnswersIndex,
-  }) {
-    return ExamInformationModel(
-      numOfDegreesPerQuestion:
-          numOfDegreesPerQuestion ?? this.numOfDegreesPerQuestion,
-      questionText: questionText ?? this.questionText,
-      answersText: answersText ?? this.answersText,
-      correctAnswersIndex: correctAnswersIndex ?? this.correctAnswersIndex,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    numOfDegreesPerQuestion,
-    questionText,
-    answersText,
-    correctAnswersIndex,
-  ];
 }

@@ -5,10 +5,10 @@ import 'package:bta3_physia/features/notifications/presentation/cubit/notificati
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BuildAppBar extends StatelessWidget {
-  final ExamsState state;
+class NotificationAppBar extends StatelessWidget {
+  final NotificationsState state;
   final bool isPermission;
-  const BuildAppBar({
+  const NotificationAppBar({
     super.key,
     required this.state,
     required this.isPermission,

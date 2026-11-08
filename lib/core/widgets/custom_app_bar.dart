@@ -1,161 +1,91 @@
+import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
+import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget {
+  final bool showRightArrow;
+  final String title;
+  final String subTitle;
+
   const CustomAppBar({
     super.key,
-    this.title,
-    this.titleColor,
-    this.titleBackgroundColor,
-    this.backButtonColor,
-    this.titleWidget,
-    this.actions,
-    this.leading,
-    this.showBackButton = true,
-    this.centerTitle = true,
-    this.backgroundColor,
-    this.elevation = 0,
-    this.toolbarHeight,
-    this.bottom,
+    this.showRightArrow = false,
+    required this.title,
+    required this.subTitle,
   });
-
-  static const double _portraitHeight = 76;
-  static const double _landscapeHeight = 56;
-  static const double _leadingWidth = 56;
-  static const double _backIconSize = 20;
-  static const double _actionIconSize = 24;
-
-  final String? title;
-  final Color? titleColor;
-  final Color? titleBackgroundColor;
-  final Color? backButtonColor;
-  final Widget? titleWidget;
-  final List<Widget>? actions;
-  final Widget? leading;
-  final bool showBackButton;
-  final bool centerTitle;
-  final Color? backgroundColor;
-  final double elevation;
-  final double? toolbarHeight;
-  final PreferredSizeWidget? bottom;
-
-  bool get _isLandscape {
-    return ScreenUtil().screenWidth > ScreenUtil().screenHeight;
-  }
-
-  double get _effectiveToolbarHeight {
-    if (toolbarHeight != null) {
-      return toolbarHeight!;
-    }
-
-    return _isLandscape ? _landscapeHeight : _portraitHeight;
-  }
-
-  @override
-  Size get preferredSize {
-    final bottomHeight = bottom?.preferredSize.height ?? 0;
-
-    return Size.fromHeight(_effectiveToolbarHeight + bottomHeight);
-  }
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape =
-        MediaQuery.orientationOf(context) == Orientation.landscape;
-
-    final effectiveHeight =
-        toolbarHeight ?? (isLandscape ? _landscapeHeight : _portraitHeight);
-
-    return AppBar(
-      toolbarHeight: effectiveHeight,
-      leadingWidth: _leadingWidth,
-      elevation: elevation,
-      scrolledUnderElevation: 0,
-      backgroundColor: backgroundColor ?? ColorPalette.background,
-      centerTitle: centerTitle,
-      automaticallyImplyLeading: false,
-      titleSpacing: isLandscape ? 12 : 8,
-      leading: _buildLeading(context),
-      title: _buildTitle(isLandscape: isLandscape),
-      actions: actions,
-      actionsIconTheme: IconThemeData(
-        size: _actionIconSize,
-        color: titleColor ?? ColorPalette.textPrimary,
-      ),
-      bottom: bottom,
-    );
-  }
-
-  Widget? _buildLeading(BuildContext context) {
-    final shouldShowBackButton =
-        showBackButton && Navigator.of(context).canPop();
-
-    if (!shouldShowBackButton) {
-      return leading;
-    }
-
-    return SizedBox(
-      width: _leadingWidth,
-      height: _leadingWidth,
-      child: IconButton(
-        tooltip: 'رجوع',
-        padding: EdgeInsets.zero,
-        constraints: const BoxConstraints(
-          minWidth: _leadingWidth,
-          minHeight: _leadingWidth,
-        ),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: Icon(
-          Icons.arrow_back_ios_new_rounded,
-          size: _backIconSize,
-          color: backButtonColor ?? ColorPalette.textPrimary,
-        ),
-      ),
-    );
-  }
-
-  Widget? _buildTitle({required bool isLandscape}) {
-    final normalizedTitle = title?.trim();
-
-    if (normalizedTitle == null || normalizedTitle.isEmpty) {
-      return titleWidget;
-    }
-
-    final titleText = Text(
-      normalizedTitle,
-      maxLines: isLandscape ? 1 : 2,
-      softWrap: !isLandscape,
-      overflow: TextOverflow.clip,
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.rtl,
-      style: titleBackgroundColor == null
-          ? AppTextStyle.font18TextPrimarySemiBoldKufam().copyWith(
-              color: titleColor,
-              fontSize: 18,
-              height: isLandscape ? 1.2 : 1.35,
-            )
-          : AppTextStyle.font22TextLightBoldKufam().copyWith(
-              color: titleColor ?? ColorPalette.textLight,
+    return Row(
+      children: [
+        if (!showRightArrow)
+          InkWell(
+            onTap: () {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context)
+                    .pushReplacementNamed(RouteNames.mainNavigationScreen);
+              }
+            },
+            borderRadius: BorderRadius.circular(14.r),
+            child: Container(
+              width: 44.w,
+              height: 44.h,
+              decoration: BoxDecoration(
+                color: ColorPalette.fieldFill,
+                borderRadius: BorderRadius.circular(14.r),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  size: 18.r,
+                  color: ColorPalette.teal200,
+                ),
+              ),
             ),
-    );
-
-    if (titleBackgroundColor == null) {
-      return titleText;
-    }
-
-    return Container(
-      width: 138.w,
-      height: 44.h,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: titleBackgroundColor,
-        borderRadius: BorderRadius.circular(28.r),
-      ),
-      child: titleText,
+          ),
+        const Spacer(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(title, style: AppTextStyle.font22TextLightBoldTajawal()),
+            Text(subTitle, style: AppTextStyle.font13TextMutedRegularTajawal()),
+          ],
+        ),
+        horizontalSpace(9),
+        if (showRightArrow)
+          InkWell(
+            onTap: () {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context)
+                    .pushReplacementNamed(RouteNames.mainNavigationScreen);
+              }
+            },
+            borderRadius: BorderRadius.circular(14.r),
+            child: Container(
+              width: 44.w,
+              height: 44.h,
+              decoration: BoxDecoration(
+                color: ColorPalette.fieldFill,
+                borderRadius: BorderRadius.circular(14.r),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18.r,
+                  color: ColorPalette.teal200,
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

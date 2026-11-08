@@ -4,9 +4,9 @@ import 'package:bta3_physia/features/notifications/presentation/cubit/notificati
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BuildSubHeader extends StatelessWidget {
-  final ExamsState state;
-  const BuildSubHeader({super.key, required this.state});
+class NotificationSubHeader extends StatelessWidget {
+  final NotificationsState state;
+  const NotificationSubHeader({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class BuildSubHeader extends StatelessWidget {
     final count = state.unreadCount;
     final unreadText = count == 0
         ? 'لا توجد إشعارات غير مقروءة'
-        : '$count إشعارات غير مقروءة';
+        : 'إشعارات غير مقروءة';
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

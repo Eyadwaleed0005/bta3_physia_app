@@ -22,7 +22,7 @@ class HomeScreenContent extends StatelessWidget {
           backgroundColor: ColorPalette.teal500,
           onRefresh: () async {
             context.read<HomeCubit>().refresh();
-            await Future.delayed(const Duration(milliseconds: 2000));
+            // Removed forced 2-second delay for better responsiveness
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),

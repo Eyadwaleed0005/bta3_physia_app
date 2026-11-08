@@ -24,6 +24,7 @@ class CustomButton extends StatelessWidget {
     this.child,
     this.padding,
     this.elevation,
+    this.titleForRefreash = 'جارٍ التحميل',
   });
 
   final String? text;
@@ -42,6 +43,7 @@ class CustomButton extends StatelessWidget {
   final Widget? child;
   final EdgeInsetsGeometry? padding;
   final double? elevation;
+  final String titleForRefreash;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: isLoading
             ? AppLoadingIndicator(
+                title: titleForRefreash,
                 color: buttonForeground,
                 size: 22,
                 strokeWidth: 2.5,

@@ -2,13 +2,13 @@ import 'package:bta3_physia/features/notifications/data/models/notification_item
 import 'package:bta3_physia/features/notifications/presentation/cubit/notifications_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NotificationsCubit extends Cubit<ExamsState> {
+class NotificationsCubit extends Cubit<NotificationsState> {
   NotificationsCubit({
     NotificationsViewMode initialViewMode = NotificationsViewMode.list,
     NotificationFilter initialFilter = NotificationFilter.all,
     List<NotificationItemModel>? initialItems,
   }) : super(
-         ExamsState(
+         NotificationsState(
            viewMode: initialViewMode,
            filter: initialFilter,
            items: initialItems ?? NotificationItemModel.defaultItems(),
