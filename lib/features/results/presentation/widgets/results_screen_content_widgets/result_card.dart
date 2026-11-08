@@ -1,10 +1,13 @@
+import 'package:bta3_physia/app/routes/app_images_routes.dart';
 import 'package:bta3_physia/core/helper/arabic_numbers_helper.dart';
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
+import 'package:bta3_physia/core/widgets/custom_button.dart';
 import 'package:bta3_physia/features/results/data/models/exam_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ResultCard extends StatelessWidget {
   final ExamResultModel result;
@@ -14,77 +17,71 @@ class ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16.r),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-        decoration: BoxDecoration(
-          color: ColorPalette.panelGlass,
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: ColorPalette.fieldFill,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: Text(
-                    '${toArabicNumbers(result.score)} / ${toArabicNumbers(result.totalDegrees)}',
-                    style: AppTextStyle.font14TextHighlightBoldTajawal(),
-                  ),
-                ),
-                horizontalSpace(12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        result.examTitle,
-                        textAlign: TextAlign.end,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.font16TextLightBoldTajawal(),
-                      ),
-                      verticalSpace(4),
-                      Text(
-                        result.submittedAt,
-                        textAlign: TextAlign.end,
-                        style: AppTextStyle.font12TextMutedRegularTajawal(),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace(12),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(2.r),
-              child: Container(
-                height: 4.h,
-                color: ColorPalette.fieldFill,
-                child: FractionallySizedBox(
-                  alignment: AlignmentDirectional.centerEnd,
-                  widthFactor: result.percentage.clamp(0.0, 1.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: ColorPalette.accent,
-                      borderRadius: BorderRadius.circular(2.r),
+    final minutes = int.tryParse(result.duration.split(':').first) ?? 0;
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: ColorPalette.panelGlass,
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'اكتملت المحاولة',
+                      style: AppTextStyle.font12TextSecondaryBoldTajawal(),
                     ),
-                  ),
+                    Text(
+                      result.examTitle,
+                      textAlign: TextAlign.right,
+                      style: AppTextStyle.font18TextLightBoldTajawal(),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
+              horizontalSpace(12),
+              Container(
+                width: 44.w,
+                height: 44.h,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: ColorPalette.screenBackground,
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
+                child: SvgPicture.asset(
+                  AppImage().blueExam,
+                  fit: BoxFit.contain,
+                  width: 24.r,
+                  height: 24.r,
+                ),
+              ),
+            ],
+          ),
+          verticalSpace(6),
+          Text(
+            '${toArabicNumbers(result.totalQuestions)} أسئلة • ${toArabicNumbers(result.totalDegrees)} درجات • ${toArabicNumbers(minutes)} دقيقة',
+            style: AppTextStyle.font12TextMutedRegularTajawal(),
+          ),
+          verticalSpace(14),
+          CustomButton(
+            onPressed: onTap,
+            height: 48.h,
+            background: ColorPalette.accent,
+            foreground: ColorPalette.textPrimary,
+            borderRadius: 24.r,
+            text: 'عرض النتيجة',
+            textStyle: AppTextStyle.font16TextPrimaryBoldTajawal(),
+          ),
+        ],
       ),
     );
   }

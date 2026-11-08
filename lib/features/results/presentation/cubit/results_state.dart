@@ -4,8 +4,6 @@ import 'package:equatable/equatable.dart';
 
 enum ResultsViewMode { loading, empty, available, failure }
 
-enum ExamResultViewMode { loading, loaded, failure }
-
 class ResultsState extends Equatable {
   const ResultsState({
     this.title = 'نتائجي',
@@ -14,7 +12,6 @@ class ResultsState extends Equatable {
     this.items = const [],
     this.resultTitle = 'نتيجة الامتحان',
     this.resultSubTitle = 'الصف الثالث الثانوي',
-    this.resultViewMode = ExamResultViewMode.loading,
     this.result,
   });
 
@@ -24,7 +21,6 @@ class ResultsState extends Equatable {
   final List<ExamResultModel> items;
   final String resultTitle;
   final String resultSubTitle;
-  final ExamResultViewMode resultViewMode;
   final ExamResultModel? result;
 
   int get resultsCount => items.length;
@@ -44,7 +40,6 @@ class ResultsState extends Equatable {
     List<ExamResultModel>? items,
     String? resultTitle,
     String? resultSubTitle,
-    ExamResultViewMode? resultViewMode,
     ExamResultModel? result,
   }) {
     return ResultsState(
@@ -54,7 +49,6 @@ class ResultsState extends Equatable {
       items: items ?? this.items,
       resultTitle: resultTitle ?? this.resultTitle,
       resultSubTitle: resultSubTitle ?? this.resultSubTitle,
-      resultViewMode: resultViewMode ?? this.resultViewMode,
       result: result ?? this.result,
     );
   }
@@ -67,7 +61,6 @@ class ResultsState extends Equatable {
     items,
     resultTitle,
     resultSubTitle,
-    resultViewMode,
     result,
   ];
 }

@@ -17,7 +17,6 @@ class ResultsCubit extends Cubit<ResultsState> {
     emit(state.copyWith(viewMode: mode));
   }
 
-  /// Pull-to-refresh and the failure/retry action both end on the same list.
   void refresh() {
     emit(state.copyWith(viewMode: ResultsViewMode.loading));
 
@@ -42,29 +41,24 @@ class ResultsCubit extends Cubit<ResultsState> {
   }
 
   void load(ExamResultModel result) {
-    emit(
-      state.copyWith(
-        resultViewMode: ExamResultViewMode.loading,
-        result: result,
-      ),
-    );
+    emit(state.copyWith(viewMode: ResultsViewMode.loading, result: result));
 
     Future.delayed(const Duration(milliseconds: 500), () {
       if (isClosed) return;
-      emit(state.copyWith(resultViewMode: ExamResultViewMode.loaded));
+      emit(state.copyWith(viewMode: ResultsViewMode.available));
     });
   }
 
   void retryResult() {
     final result = state.result;
     if (result == null) {
-      emit(state.copyWith(resultViewMode: ExamResultViewMode.failure));
+      emit(state.copyWith(viewMode: ResultsViewMode.failure));
       return;
     }
     load(result);
   }
 
   void markFailure() {
-    emit(state.copyWith(resultViewMode: ExamResultViewMode.failure));
+    emit(state.copyWith(viewMode: ResultsViewMode.failure));
   }
 }

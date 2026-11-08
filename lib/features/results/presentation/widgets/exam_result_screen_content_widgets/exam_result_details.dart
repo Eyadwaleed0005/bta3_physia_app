@@ -6,11 +6,11 @@ import 'package:bta3_physia/features/results/presentation/widgets/exam_result_sc
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExamResultLoadedState extends StatelessWidget {
+class ExamResultDetails extends StatelessWidget {
   final ResultsState state;
   final VoidCallback onReturnPressed;
 
-  const ExamResultLoadedState({
+  const ExamResultDetails({
     super.key,
     required this.state,
     required this.onReturnPressed,
@@ -32,7 +32,7 @@ class ExamResultLoadedState extends StatelessWidget {
         Text(
           'اكتملت محاولتك',
           textAlign: TextAlign.center,
-          style: AppTextStyle.font16TextLightBoldTajawal(),
+          style: AppTextStyle.font16TextHighlightBoldTajawal(),
         ),
         verticalSpace(8),
         Text(
@@ -50,6 +50,7 @@ class ExamResultLoadedState extends StatelessWidget {
             decoration: BoxDecoration(
               color: ColorPalette.fieldFill,
               borderRadius: BorderRadius.circular(21.r),
+              border: Border.all(color: ColorPalette.borderWarm),
             ),
             child: Text(
               'العودة إلى النتائج',

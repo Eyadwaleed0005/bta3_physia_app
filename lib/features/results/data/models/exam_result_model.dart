@@ -10,7 +10,7 @@ class ExamResultModel extends Equatable {
     required this.correctCount,
     required this.wrongCount,
     required this.unansweredCount,
-    required this.submittedAt,
+    required this.duration,
     this.canRetry = false,
   });
 
@@ -22,7 +22,7 @@ class ExamResultModel extends Equatable {
   final int correctCount;
   final int wrongCount;
   final int unansweredCount;
-  final String submittedAt;
+  final String duration;
   final bool canRetry;
 
   double get percentage {
@@ -39,7 +39,7 @@ class ExamResultModel extends Equatable {
     int? correctCount,
     int? wrongCount,
     int? unansweredCount,
-    String? submittedAt,
+    String? duration,
     bool? canRetry,
   }) {
     return ExamResultModel(
@@ -51,7 +51,7 @@ class ExamResultModel extends Equatable {
       correctCount: correctCount ?? this.correctCount,
       wrongCount: wrongCount ?? this.wrongCount,
       unansweredCount: unansweredCount ?? this.unansweredCount,
-      submittedAt: submittedAt ?? this.submittedAt,
+      duration: duration ?? this.duration,
       canRetry: canRetry ?? this.canRetry,
     );
   }
@@ -66,7 +66,7 @@ class ExamResultModel extends Equatable {
     correctCount,
     wrongCount,
     unansweredCount,
-    submittedAt,
+    duration,
     canRetry,
   ];
 
@@ -81,7 +81,7 @@ class ExamResultModel extends Equatable {
         correctCount: 5,
         wrongCount: 3,
         unansweredCount: 2,
-        submittedAt: 'اليوم، ٨:٠٠ م',
+        duration: "60",
       ),
       ExamResultModel(
         id: '2',
@@ -92,7 +92,7 @@ class ExamResultModel extends Equatable {
         correctCount: 7,
         wrongCount: 2,
         unansweredCount: 1,
-        submittedAt: 'أمس، ٥:٣٠ م',
+        duration: "60",
       ),
       ExamResultModel(
         id: '3',
@@ -103,7 +103,7 @@ class ExamResultModel extends Equatable {
         correctCount: 3,
         wrongCount: 4,
         unansweredCount: 3,
-        submittedAt: 'منذ ٣ أيام',
+        duration: "60",
       ),
     ];
   }

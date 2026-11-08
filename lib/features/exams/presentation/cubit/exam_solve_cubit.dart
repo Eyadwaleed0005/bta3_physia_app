@@ -172,7 +172,7 @@ class ExamSolveCubit extends Cubit<ExamSolveState> {
       correctCount: state.correctCount,
       wrongCount: state.wrongCount,
       unansweredCount: state.unansweredCount,
-      submittedAt: 'الآن',
+      duration: 'الآن',
     );
   }
 

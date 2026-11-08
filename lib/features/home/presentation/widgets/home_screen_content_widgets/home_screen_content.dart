@@ -1,6 +1,5 @@
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
 import 'package:bta3_physia/core/helper/spacer.dart';
-import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/features/home/presentation/cubit/home_cubit.dart';
 import 'package:bta3_physia/features/home/presentation/cubit/home_state.dart';
 import 'package:bta3_physia/features/home/presentation/widgets/home_screen_content_widgets/home_grade_bar.dart';
@@ -17,39 +16,31 @@ class HomeScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        return RefreshIndicator(
-          color: ColorPalette.accent,
-          backgroundColor: ColorPalette.teal500,
-          onRefresh: () async {
-            context.read<HomeCubit>().refresh();
-            // Removed forced 2-second delay for better responsiveness
-          },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                HomeHeader(
-                  userName: state.userName,
-                  unreadNotificationsCount: state.unreadNotificationsCount,
-                  onNotificationTap: () {
-                    Navigator.of(context)
-                        .pushNamed(RouteNames.notificationsScreen);
-                  },
-                ),
+        return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              HomeHeader(
+                userName: state.userName,
+                unreadNotificationsCount: state.unreadNotificationsCount,
+                onNotificationTap: () {
+                  Navigator.of(context)
+                      .pushNamed(RouteNames.notificationsScreen);
+                },
+              ),
 
-                verticalSpace(14),
+              verticalSpace(14),
 
-                const HomeGradeBar(),
+              const HomeGradeBar(),
 
-                verticalSpace(16),
+              verticalSpace(16),
 
-                BuildHomeBodyForMode(state: state),
+              BuildHomeBodyForMode(state: state),
 
-                verticalSpace(90),
-              ],
-            ),
+              verticalSpace(90),
+            ],
           ),
         );
       },

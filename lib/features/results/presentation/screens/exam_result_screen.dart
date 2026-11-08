@@ -15,7 +15,7 @@ class ExamResultScreen extends StatelessWidget {
         child: SafeArea(
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: const ExamResultScreenContent(),
+            body: ExamResultScreenContent(),
           ),
         ),
       ),

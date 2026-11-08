@@ -1,5 +1,4 @@
 import 'package:bta3_physia/core/helper/spacer.dart';
-import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/core/widgets/custom_app_bar.dart';
 import 'package:bta3_physia/features/results/presentation/cubit/results_cubit.dart';
 import 'package:bta3_physia/features/results/presentation/cubit/results_state.dart';
@@ -20,19 +19,18 @@ class ResultsScreenContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CustomAppBar(title: state.title, subTitle: state.subTitle),
+              CustomAppBar(
+                title: state.title,
+                subTitle: state.subTitle,
+                showContentOnly: false,
+              ),
               verticalSpace(16),
               Expanded(
-                child: RefreshIndicator(
-                  onRefresh: () async => context.read<ResultsCubit>().refresh(),
-                  color: ColorPalette.textPrimary,
-                  backgroundColor: ColorPalette.accent,
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 12.h),
-                      child: ResultsBodyForMode(state: state),
-                    ),
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 12.h),
+                    child: ResultsBodyForMode(state: state),
                   ),
                 ),
               ),
