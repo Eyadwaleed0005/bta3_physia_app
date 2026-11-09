@@ -59,7 +59,7 @@ dependencies:
   syncfusion_flutter_core: ^34.2.7
   syncfusion_flutter_pdfviewer: ^34.2.7
   url_launcher: ^6.3.2
-  youtube_player_flutter: ^10.0.1
+  youtube_player_iframe: 6.0.2
 dev_dependencies:
   bloc_test: ^10.0.0
   flutter_launcher_icons: ^0.14.4

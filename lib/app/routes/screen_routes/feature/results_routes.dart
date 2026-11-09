@@ -1,5 +1,6 @@
 import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
+import 'package:bta3_physia/core/transition/app_transition.dart';
 import 'package:bta3_physia/features/results/data/models/exam_result_model.dart';
 import 'package:bta3_physia/features/results/presentation/cubit/results_cubit.dart';
 import 'package:bta3_physia/features/results/presentation/screens/exam_result_screen.dart';
@@ -13,9 +14,9 @@ abstract final class ResultsRoutes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteNames.resultScreen:
-        return MaterialPageRoute(
+        return AppTransition.simpleTransition(
           settings: settings,
-          builder: (_) => BlocProvider<ResultsCubit>(
+          screen: BlocProvider<ResultsCubit>(
             create: (_) => getIt<ResultsCubit>(),
             child: const ResultsScreen(),
           ),
@@ -27,9 +28,9 @@ abstract final class ResultsRoutes {
             ? arguments
             : null;
 
-        return MaterialPageRoute(
+        return AppTransition.simpleTransition(
           settings: settings,
-          builder: (_) => BlocProvider<ResultsCubit>(
+          screen: BlocProvider<ResultsCubit>(
             create: (context) {
               final cubit = getIt<ResultsCubit>();
               if (result == null) {

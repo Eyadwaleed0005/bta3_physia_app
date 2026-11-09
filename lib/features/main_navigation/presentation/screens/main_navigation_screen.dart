@@ -1,4 +1,5 @@
 import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
+import 'package:bta3_physia/features/courses/presentation/cubit/course_cubit.dart';
 import 'package:bta3_physia/features/courses/presentation/screens/courses_screen.dart';
 import 'package:bta3_physia/features/home/presentation/cubit/home_cubit.dart';
 import 'package:bta3_physia/features/home/presentation/screens/home_screen.dart';
@@ -25,8 +26,6 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  /// نفس النسخة المشتركة في `getIt`، حتى تستطيع الشاشات المدفوعة فوق التنقل
-  /// (مثل نتيجة الامتحان) تغيير التبويب ثم العودة إلى هذه الشاشة.
   late final BottomNavigationCubit _bottomNavigationCubit;
 
   @override
@@ -76,7 +75,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         );
 
       case MainNavigationTabs.courses:
-        return const CoursesScreen();
+        return BlocProvider(
+          create: (context) => getIt<CourseCubit>(),
+          child: const CoursesScreen(),
+        );
 
       case MainNavigationTabs.live:
         return const LiveScreen();

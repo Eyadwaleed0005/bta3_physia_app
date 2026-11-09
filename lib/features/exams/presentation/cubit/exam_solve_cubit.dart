@@ -130,10 +130,6 @@ class ExamSolveCubit extends Cubit<ExamSolveState> {
     startAttempt();
   }
 
-  void setOnlineStatus(bool isOnline) {
-    _isOnline = isOnline;
-  }
-
   int? _durationFromExam(ExamsModel? exam) {
     if (exam == null) return null;
     final minutes = int.tryParse(exam.time.split(':').first);

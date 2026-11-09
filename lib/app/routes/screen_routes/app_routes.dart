@@ -1,7 +1,9 @@
 import 'package:bta3_physia/app/routes/screen_routes/feature/app_startup_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/auth_routes.dart';
-import 'package:bta3_physia/app/routes/screen_routes/feature/exam_route.dart';
+import 'package:bta3_physia/app/routes/screen_routes/feature/courses_routes.dart';
+import 'package:bta3_physia/app/routes/screen_routes/feature/exam_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/home_routes.dart';
+import 'package:bta3_physia/app/routes/screen_routes/feature/lesson_quiz_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/main_navigation.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/notifications_routes.dart';
 import 'package:bta3_physia/app/routes/screen_routes/feature/results_routes.dart';
@@ -15,9 +17,11 @@ abstract final class AppRoutes {
         AuthRoutes.generateRoute(settings) ??
         MainNavigationRoutes.generateRoute(settings) ??
         HomeRoutes.generateRoute(settings) ??
+        CoursesRoutes.generateRoute(settings) ??
         NotificationsRoutes.generateRoute(settings) ??
         ExamRoutes.generateRoute(settings) ??
         ResultsRoutes.generateRoute(settings) ??
+        LessonQuizRoutes.generateRoute(settings) ??
         _buildUnknownRoute(settings);
   }
 

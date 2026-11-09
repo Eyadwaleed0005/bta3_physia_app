@@ -1,7 +1,7 @@
 import 'package:bta3_physia/features/exams/data/models/exams_model.dart';
 import 'package:equatable/equatable.dart';
 
-enum ExamsViewMode { empty, failure, available, loading, pendingConnection }
+enum ExamsViewMode { empty, failure, available, loading }
 
 class ExamsState extends Equatable {
   const ExamsState({

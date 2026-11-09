@@ -9,11 +9,7 @@ enum ExamSolveViewMode {
   confirming,
   grading,
   finished,
-  failure,
-  closed,
-  deleted,
   pendingConnection,
-  resume,
 }
 
 class ExamSolveState extends Equatable {

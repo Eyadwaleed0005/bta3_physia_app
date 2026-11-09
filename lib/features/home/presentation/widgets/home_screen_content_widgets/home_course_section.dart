@@ -108,14 +108,23 @@ class HomeCourseSection extends StatelessWidget {
                           // Action Link
                           GestureDetector(
                             onTap: onStartLearningTap ?? onCourseTap,
-                            child: Text(
-                              actionText,
-                              style:
-                                  AppTextStyle.font14TextHighlightBoldTajawal()
-                                      .copyWith(
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: ColorPalette.accent,
-                                      ),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: ColorPalette.textHighLight,
+                                    width: 1.5,
+                                  ),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 3.h),
+                                child: Text(
+                                  actionText,
+                                  style:
+                                      AppTextStyle.font14TextHighlightBoldTajawal(),
+                                ),
+                              ),
                             ),
                           ),
 

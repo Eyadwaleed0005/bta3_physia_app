@@ -35,6 +35,7 @@ class AppImage {
   late final String category = '${baseIcons}category.svg';
   late final String blueBook = '${baseIcons}book_blue.svg';
   late final String blueExam = '${baseIcons}exam_blue.svg';
+  late final String emptyBookOpen = '${baseIcons}empty_book_open.svg';
 
   // ===== animations =====
   late final String splash = '${baseAnimations}splash.json';

@@ -12,4 +12,9 @@ abstract final class RouteNames {
   static const String examSolveScreen = '/exam_solve_screen';
   static const String examResultScreen = '/exam_result_screen';
   static const String resultScreen = '/result_screen';
+  static const String coursesScreen = '/courses_screen';
+  static const String courseLessonsScreen = '/course_lessons_screen';
+  static const String lessonDetailScreen = '/lesson_detail_screen';
+  static const String lessonPdfViewerScreen = '/lesson_pdf_body';
+  static const String lessonQuizScreen = '/lesson_quiz_screen';
 }
