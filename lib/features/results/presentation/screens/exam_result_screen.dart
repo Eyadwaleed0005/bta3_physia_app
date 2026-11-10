@@ -12,11 +12,9 @@ class ExamResultScreen extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: AppSystemUi.dark(),
       child: AppScreenBackdrop(
-        child: SafeArea(
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: ExamResultScreenContent(),
-          ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: const ExamResultScreenContent(),
         ),
       ),
     );

@@ -11,14 +11,7 @@ class ResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: AppSystemUi.dark(),
-      child: AppScreenBackdrop(
-        child: SafeArea(
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: const ResultsScreenContent(),
-          ),
-        ),
-      ),
+      child: AppScreenBackdrop(child: const ResultsScreenContent()),
     );
   }
 }

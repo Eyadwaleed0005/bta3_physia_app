@@ -1,16 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:bta3_physia/app/routes/app_images_routes.dart';
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:bta3_physia/core/widgets/custom_button.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
-class ExamsClosedState extends StatelessWidget {
-  final VoidCallback onReturnPressed;
+class LessonQuizFailureState extends StatelessWidget {
+  final VoidCallback onRetryPressed;
 
-  const ExamsClosedState({super.key, required this.onReturnPressed});
+  const LessonQuizFailureState({super.key, required this.onRetryPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +29,13 @@ class ExamsClosedState extends StatelessWidget {
               SvgPicture.asset(AppImage().blueExam, width: 36.r, height: 36.r),
               verticalSpace(14),
               Text(
-                'أُغلق الامتحان',
+                'تعذّر بدء الامتحان',
                 textAlign: TextAlign.end,
                 style: AppTextStyle.font20TextLightBoldTajawal(),
               ),
               verticalSpace(8),
               Text(
-                'لا يمكن بدء محاولة جديدة. إذا بدأت محاولتك بالفعل، فيمكنك استكمالها حتى تسليمها أو انتهاء وقتها.',
+                'تحقق من اتصالك ثم أعد المحاولة. لم تُحجز محاولة ولم يبدأ الوقت.',
                 textAlign: TextAlign.end,
                 style: AppTextStyle.font14TextMutedRegularTajawal(),
               ),
@@ -44,13 +44,30 @@ class ExamsClosedState extends StatelessWidget {
         ),
         verticalSpace(16),
         CustomButton(
-          onPressed: onReturnPressed,
+          onPressed: onRetryPressed,
+          titleForRefreash: 'جارٍ التحميل',
           height: 48.h,
           background: ColorPalette.accent,
           foreground: ColorPalette.textPrimary,
           borderRadius: 24.r,
-          text: 'العودة إلى الامتحانات',
           textStyle: AppTextStyle.font16TextPrimaryBoldTajawal(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.refresh_rounded,
+                size: 20.r,
+                color: ColorPalette.textPrimary,
+              ),
+              horizontalSpace(8),
+
+              Text(
+                'جارٍ التحميل',
+                style: AppTextStyle.font16TextPrimaryBoldTajawal(),
+              ),
+            ],
+          ),
         ),
       ],
     );

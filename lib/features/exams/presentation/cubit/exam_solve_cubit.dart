@@ -22,7 +22,7 @@ class ExamSolveCubit extends Cubit<ExamSolveState> {
 
   Timer? _ticker;
   Timer? _transition;
-  bool _isOnline = true;
+  final bool _isOnline = true;
 
   void startAttempt({ExamsModel? exam}) {
     _ticker?.cancel();

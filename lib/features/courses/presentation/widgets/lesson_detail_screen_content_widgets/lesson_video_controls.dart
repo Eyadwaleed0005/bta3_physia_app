@@ -362,7 +362,7 @@ class _LessonVideoControlsState extends State<LessonVideoControls> {
       child: IgnorePointer(
         child: Center(
           child: AppLoadingIndicator(
-            color: ColorPalette.highlight,
+            color: ColorPalette.primary,
             size: 36.r,
             strokeWidth: 3.r,
             wavelength: 14.r,

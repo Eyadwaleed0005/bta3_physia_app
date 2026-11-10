@@ -42,7 +42,12 @@ class AppLoadingIndicator extends StatelessWidget {
           waveSpeed: waveSpeed,
         ),
         horizontalSpace(8),
-        Text(title, style: AppTextStyle.font16TextPrimaryBoldTajawal()),
+        Text(
+          title,
+          style: AppTextStyle.font16TextPrimaryBoldTajawal().copyWith(
+            color: color,
+          ),
+        ),
       ],
     );
   }

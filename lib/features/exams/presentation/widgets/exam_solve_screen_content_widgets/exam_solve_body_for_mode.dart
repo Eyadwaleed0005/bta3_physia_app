@@ -44,8 +44,6 @@ class ExamSolveBodyForMode extends StatelessWidget {
       case ExamSolveViewMode.finished:
         return const _SolveScrollable(child: ExamsGradingState());
 
-     
-
       case ExamSolveViewMode.pendingConnection:
         return _SolveScrollable(
           child: ExamsPendingConnectionState(

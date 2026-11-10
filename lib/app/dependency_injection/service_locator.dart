@@ -3,6 +3,7 @@ import 'package:bta3_physia/app/dependency_injection/features/auth_dependencies.
 import 'package:bta3_physia/app/dependency_injection/features/courses_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/exams_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/home_dependencies.dart';
+import 'package:bta3_physia/app/dependency_injection/features/lesson_quiz_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/main_navigation_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/notifications_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/results_dependencies.dart';
@@ -19,4 +20,5 @@ void setupServiceLocator() {
   registerNotificationsDependencies(getIt);
   registerExamsDependencies(getIt);
   registerResultsDependencies(getIt);
+  registerLessonQuizDependencies(getIt);
 }

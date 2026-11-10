@@ -235,7 +235,7 @@ class _CustomOperationResultDialogState
                   widget.message,
                   textAlign: TextAlign.center,
                   textDirection: TextDirection.rtl,
-                  style: AppTextStyle.font14TextSecondaryRegularTajawal(),
+                  style: AppTextStyle.font14TextPrimaryBoldTajawal(),
                 ),
                 if (hasCredentials) ...[
                   verticalSpace(24),
