@@ -5,10 +5,10 @@ import 'package:bta3_physia/features/courses/data/models/course_model.dart';
 import 'package:bta3_physia/features/courses/presentation/widgets/courses_screen_content_widgets/course_card.dart';
 import 'package:flutter/material.dart';
 
-class CoursesAvailable extends StatelessWidget {
+class CoursesAvailableState extends StatelessWidget {
   final List<CourseModel> courses;
 
-  const CoursesAvailable({super.key, required this.courses});
+  const CoursesAvailableState({super.key, required this.courses});
 
   @override
   Widget build(BuildContext context) {

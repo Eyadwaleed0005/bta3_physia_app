@@ -1,6 +1,5 @@
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
-import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
@@ -19,17 +18,6 @@ class HomeLoadingState extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Subtitle
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              'جارٍ تحميل محتوى صفّك...',
-              style: AppTextStyle.font14TextMutedRegularTajawal(),
-            ),
-          ),
-          verticalSpace(14),
-
-          // Live Shimmer Card
           Container(
             height: 92.h,
             decoration: BoxDecoration(
@@ -40,7 +28,6 @@ class HomeLoadingState extends StatelessWidget {
 
           verticalSpace(16),
 
-          // 3 Quick Action Shimmer Cards
           Row(
             children: [
               Expanded(
@@ -77,7 +64,6 @@ class HomeLoadingState extends StatelessWidget {
 
           verticalSpace(20),
 
-          // Section Title Shimmer
           Align(
             alignment: Alignment.centerRight,
             child: Container(
@@ -92,7 +78,6 @@ class HomeLoadingState extends StatelessWidget {
 
           verticalSpace(14),
 
-          // Course Card Shimmer
           Container(
             height: 230.h,
             decoration: BoxDecoration(
@@ -105,4 +90,3 @@ class HomeLoadingState extends StatelessWidget {
     );
   }
 }
-

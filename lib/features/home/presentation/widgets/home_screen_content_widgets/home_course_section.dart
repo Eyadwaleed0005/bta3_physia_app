@@ -75,7 +75,7 @@ class HomeCourseSection extends StatelessWidget {
                   width: double.infinity,
                   child: FadeInImage(
                     placeholder: AssetImage(AppImage().courseBanner),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     filterQuality: FilterQuality.high,
                     image: AssetImage(AppImage().courseBanner),
                   ),

@@ -15,9 +15,11 @@ class CoursesMessageCard extends StatelessWidget {
     this.onPressed,
     this.buttonText,
     this.isLoading = false,
+    this.image,
   });
 
   final String title;
+  final String? image;
   final String description;
   final VoidCallback? onPressed;
   final String? buttonText;
@@ -37,7 +39,11 @@ class CoursesMessageCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              SvgPicture.asset(AppImage().blueBook, width: 36.r, height: 36.r),
+              SvgPicture.asset(
+                image ?? AppImage().blueBook,
+                width: 36.r,
+                height: 36.r,
+              ),
               verticalSpace(14),
               Text(
                 title,

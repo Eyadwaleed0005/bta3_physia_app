@@ -16,7 +16,10 @@ class BuildHomeBodyForMode extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (state.viewMode) {
       case HomeViewMode.loading:
-        return const HomeLoadingState();
+        return Padding(
+          padding: EdgeInsets.only(top: 40.h),
+          child: const HomeLoadingState(),
+        );
 
       case HomeViewMode.emptyGrade:
         return Padding(

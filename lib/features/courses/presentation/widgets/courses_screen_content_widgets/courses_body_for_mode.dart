@@ -2,7 +2,7 @@ import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/features/courses/presentation/cubit/course_cubit.dart';
 import 'package:bta3_physia/features/courses/presentation/cubit/course_state.dart';
 import 'package:bta3_physia/features/courses/presentation/widgets/courses_screen_content_widgets/courses_filter_tabs.dart';
-import 'package:bta3_physia/features/courses/presentation/widgets/courses_screen_content_widgets/courses_available.dart';
+import 'package:bta3_physia/features/courses/presentation/widgets/courses_states/courses_available_state.dart';
 import 'package:bta3_physia/features/courses/presentation/widgets/courses_screen_content_widgets/courses_search_field.dart';
 import 'package:bta3_physia/features/courses/presentation/widgets/courses_states/courses_empty_state.dart';
 import 'package:bta3_physia/features/courses/presentation/widgets/courses_states/courses_failure_states.dart';
@@ -55,7 +55,7 @@ class CoursesBodyForMode extends StatelessWidget {
                 onChanged: cubit.updateQuery,
               ),
               verticalSpace(18),
-              CoursesAvailable(courses: state.visibleCourses),
+              CoursesAvailableState(courses: state.visibleCourses),
             ],
           ),
         );
