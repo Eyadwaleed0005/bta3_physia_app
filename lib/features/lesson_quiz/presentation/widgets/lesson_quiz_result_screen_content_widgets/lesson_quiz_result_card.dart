@@ -2,7 +2,7 @@ import 'package:bta3_physia/core/helper/arabic_numbers_helper.dart';
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
-import 'package:bta3_physia/features/lesson_quiz/models/lesson_quiz_result_model.dart';
+import 'package:bta3_physia/features/lesson_quiz/data/models/lesson_quiz_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

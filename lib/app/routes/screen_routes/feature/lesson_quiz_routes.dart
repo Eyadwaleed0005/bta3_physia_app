@@ -1,8 +1,8 @@
 import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
 import 'package:bta3_physia/core/transition/app_transition.dart';
-import 'package:bta3_physia/features/lesson_quiz/models/lesson_quiz_model.dart';
-import 'package:bta3_physia/features/lesson_quiz/models/lesson_quiz_result_model.dart';
+import 'package:bta3_physia/features/lesson_quiz/data/models/lesson_quiz_model.dart';
+import 'package:bta3_physia/features/lesson_quiz/data/models/lesson_quiz_result_model.dart';
 import 'package:bta3_physia/features/lesson_quiz/presentation/cubit/lesson_quiz_cubit.dart';
 import 'package:bta3_physia/features/lesson_quiz/presentation/cubit/lesson_quiz_results_cubit.dart';
 import 'package:bta3_physia/features/lesson_quiz/presentation/screens/lesson_quiz_result_screen.dart';

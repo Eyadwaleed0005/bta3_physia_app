@@ -3,17 +3,12 @@ import 'package:bta3_physia/features/notifications/presentation/cubit/notificati
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationsCubit extends Cubit<NotificationsState> {
-  NotificationsCubit({
-    NotificationsViewMode initialViewMode = NotificationsViewMode.list,
-    NotificationFilter initialFilter = NotificationFilter.all,
-    List<NotificationItemModel>? initialItems,
-  }) : super(
-         NotificationsState(
-           viewMode: initialViewMode,
-           filter: initialFilter,
-           items: initialItems ?? NotificationItemModel.defaultItems(),
-         ),
-       );
+  NotificationsCubit({List<NotificationItemModel>? initialItems})
+    : super(
+        NotificationsState(
+          items: initialItems ?? NotificationItemModel.defaultItems(),
+        ),
+      );
 
   void setFilter(NotificationFilter filter) {
     emit(state.copyWith(filter: filter));

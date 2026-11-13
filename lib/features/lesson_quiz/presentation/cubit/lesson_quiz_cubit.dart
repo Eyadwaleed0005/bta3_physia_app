@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:bta3_physia/features/lesson_quiz/models/lesson_quiz_model.dart';
-import 'package:bta3_physia/features/lesson_quiz/models/lesson_quiz_result_model.dart';
+import 'package:bta3_physia/features/lesson_quiz/data/models/lesson_quiz_model.dart';
+import 'package:bta3_physia/features/lesson_quiz/data/models/lesson_quiz_result_model.dart';
 import 'package:bta3_physia/features/lesson_quiz/presentation/cubit/lesson_quiz_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LessonQuizCubit extends Cubit<LessonQuizState> {
-  LessonQuizCubit({LessonQuizViewMode viewMode = LessonQuizViewMode.starting})
-    : super(LessonQuizState(viewMode: viewMode));
+  LessonQuizCubit()
+    : super(LessonQuizState());
 
   Timer? _transition;
 

@@ -18,4 +18,5 @@ abstract final class RouteNames {
   static const String lessonPdfViewerScreen = '/lesson_pdf_body';
   static const String lessonQuizScreen = '/lesson_quiz_screen';
   static const String lessonQuizResultScreen = '/lesson_quiz_result_screen';
+  static const String liveScreen = '/live_screen';
 }

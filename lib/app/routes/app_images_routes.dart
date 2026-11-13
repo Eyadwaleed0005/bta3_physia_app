@@ -37,6 +37,8 @@ class AppImage {
   late final String blueExam = '${baseIcons}exam_blue.svg';
   late final String emptyBookOpen = '${baseIcons}empty_book_open.svg';
   late final String graduation = '${baseIcons}graduation.svg';
+  late final String liveEmpty = '${baseIcons}live_empty.svg';
+  late final String warning = '${baseIcons}warning.svg';
 
   // ===== animations =====
   late final String splash = '${baseAnimations}splash.json';

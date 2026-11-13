@@ -1,4 +1,4 @@
-import 'package:bta3_physia/features/lesson_quiz/models/lesson_quiz_model.dart';
+import 'package:bta3_physia/features/lesson_quiz/data/models/lesson_quiz_model.dart';
 import 'package:equatable/equatable.dart';
 
 class LessonQuizResultModel extends Equatable {

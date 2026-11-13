@@ -3,15 +3,8 @@ import 'package:bta3_physia/features/results/presentation/cubit/results_state.da
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResultsCubit extends Cubit<ResultsState> {
-  ResultsCubit({
-    ResultsViewMode viewMode = ResultsViewMode.available,
-    List<ExamResultModel>? items,
-  }) : super(
-         ResultsState(
-           viewMode: viewMode,
-           items: items ?? ExamResultModel.defaultResults(),
-         ),
-       );
+  ResultsCubit({List<ExamResultModel>? items})
+    : super(ResultsState(items: items ?? ExamResultModel.defaultResults()));
 
   void setViewMode(ResultsViewMode mode) {
     emit(state.copyWith(viewMode: mode));

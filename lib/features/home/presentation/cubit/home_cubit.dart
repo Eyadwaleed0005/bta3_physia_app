@@ -2,8 +2,7 @@ import 'package:bta3_physia/features/home/presentation/cubit/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({HomeViewMode initialMode = HomeViewMode.contentWithLive})
-    : super(HomeState(viewMode: initialMode));
+  HomeCubit() : super(HomeState());
 
   void setViewMode(HomeViewMode mode) {
     emit(state.copyWith(viewMode: mode));

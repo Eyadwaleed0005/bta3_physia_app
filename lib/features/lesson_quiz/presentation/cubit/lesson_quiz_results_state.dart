@@ -1,5 +1,5 @@
 import 'package:bta3_physia/core/helper/arabic_numbers_helper.dart';
-import 'package:bta3_physia/features/lesson_quiz/models/lesson_quiz_result_model.dart';
+import 'package:bta3_physia/features/lesson_quiz/data/models/lesson_quiz_result_model.dart';
 import 'package:equatable/equatable.dart';
 
 class LessonQuizResultsState extends Equatable {

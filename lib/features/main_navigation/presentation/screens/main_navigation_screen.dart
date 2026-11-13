@@ -3,6 +3,7 @@ import 'package:bta3_physia/features/courses/presentation/cubit/course_cubit.dar
 import 'package:bta3_physia/features/courses/presentation/screens/courses_screen.dart';
 import 'package:bta3_physia/features/home/presentation/cubit/home_cubit.dart';
 import 'package:bta3_physia/features/home/presentation/screens/home_screen.dart';
+import 'package:bta3_physia/features/live/presentation/cubit/live_cubit.dart';
 import 'package:bta3_physia/features/live/presentation/screens/live_screen.dart';
 import 'package:bta3_physia/features/main_navigation/presentation/cubit/bottom_navigation_cubit.dart';
 import 'package:bta3_physia/core/constant/main_navigation_tabs.dart';
@@ -81,7 +82,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         );
 
       case MainNavigationTabs.live:
-        return const LiveScreen();
+        return BlocProvider(
+          create: (context) => getIt<LiveCubit>(),
+          child: const LiveScreen(),
+        );
 
       case MainNavigationTabs.results:
         return BlocProvider(

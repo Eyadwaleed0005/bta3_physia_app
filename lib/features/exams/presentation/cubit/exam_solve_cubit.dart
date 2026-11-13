@@ -7,12 +7,12 @@ import 'package:bta3_physia/features/results/data/models/exam_result_model.dart'
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExamSolveCubit extends Cubit<ExamSolveState> {
-  ExamSolveCubit({ExamSolveViewMode viewMode = ExamSolveViewMode.starting})
+  ExamSolveCubit()
     : _remainingController = StreamController<Duration>.broadcast(
         sync: true,
         onListen: () {},
       ),
-      super(ExamSolveState(viewMode: viewMode));
+      super(ExamSolveState());
 
   final StreamController<Duration> _remainingController;
 

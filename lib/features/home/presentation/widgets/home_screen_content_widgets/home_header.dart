@@ -15,14 +15,12 @@ class HomeHeader extends StatelessWidget {
     this.subtitle = 'هل أنت مستعد لتعلّم الفيزياء؟',
     this.unreadNotificationsCount = 2,
     this.onNotificationTap,
-    this.onNotificationLongPress,
   });
 
   final String userName;
   final String subtitle;
   final int unreadNotificationsCount;
   final VoidCallback? onNotificationTap;
-  final VoidCallback? onNotificationLongPress;
 
   @override
   Widget build(BuildContext context) {

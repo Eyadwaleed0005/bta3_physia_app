@@ -8,12 +8,16 @@ class CustomAppBar extends StatelessWidget {
   final bool showContentOnly;
   final String title;
   final String subTitle;
+  final IconData? icon;
+  final VoidCallback? iconTap;
 
   const CustomAppBar({
     super.key,
     this.showContentOnly = true,
     required this.title,
     required this.subTitle,
+    this.icon,
+    this.iconTap,
   });
 
   @override
@@ -45,6 +49,20 @@ class CustomAppBar extends StatelessWidget {
                   color: ColorPalette.teal200,
                 ),
               ),
+            ),
+          ),
+
+        if (icon != null)
+          InkWell(
+            onTap: iconTap,
+            child: Container(
+              width: 44.w,
+              height: 44.h,
+              decoration: BoxDecoration(
+                color: ColorPalette.fieldFill,
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+              child: Icon(icon, size: 30.r, color: ColorPalette.cream50),
             ),
           ),
         const Spacer(),

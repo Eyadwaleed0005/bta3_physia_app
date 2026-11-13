@@ -3,16 +3,7 @@ import 'package:bta3_physia/features/courses/presentation/cubit/course_state.dar
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseCubit extends Cubit<CourseState> {
-  CourseCubit({
-    CourseViewMode viewMode = CourseViewMode.available,
-    CourseFilter filter = CourseFilter.free,
-  }) : super(
-         CourseState(
-           viewMode: viewMode,
-           filter: filter,
-           courses: CourseModel.defaultItems(),
-         ),
-       );
+  CourseCubit() : super(CourseState(courses: CourseModel.defaultItems()));
 
   void setViewMode(CourseViewMode mode) {
     emit(state.copyWith(viewMode: mode));
