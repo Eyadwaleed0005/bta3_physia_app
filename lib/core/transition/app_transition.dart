@@ -9,7 +9,11 @@ abstract final class AppTransition {
     required Widget screen,
     RouteSettings? settings,
   }) {
-    return AppAnimations.screenFade(screen: screen, duration: 380);
+    return AppAnimations.screenFade(
+      screen: screen,
+      duration: 380,
+      settings: settings,
+    );
   }
 
   static PageRouteBuilder<void> electricTransition({

@@ -8,8 +8,10 @@ abstract final class AppAnimations {
     required Widget screen,
     int duration = 380,
     int delay = 0,
+    RouteSettings? settings,
   }) {
     return PageRouteBuilder<void>(
+      settings: settings,
       transitionDuration: Duration(milliseconds: duration),
       pageBuilder: (_, _, _) => screen,
       transitionsBuilder: (_, Animation<double> animation, _, Widget child) {

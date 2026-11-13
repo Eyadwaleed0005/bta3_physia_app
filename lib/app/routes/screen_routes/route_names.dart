@@ -19,4 +19,9 @@ abstract final class RouteNames {
   static const String lessonQuizScreen = '/lesson_quiz_screen';
   static const String lessonQuizResultScreen = '/lesson_quiz_result_screen';
   static const String liveScreen = '/live_screen';
+  static const String accountsScreen = '/accounts_screen';
+  static const String editProfileScreen = '/edit_profile_screen';
+  static const String profilePictureScreen = '/profile_picture_screen';
+  static const String verifyIdentityScreen = '/verify_identity_screen';
+  static const String logoutScreen = '/logout_screen';
 }

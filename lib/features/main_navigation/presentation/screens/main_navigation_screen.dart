@@ -8,6 +8,7 @@ import 'package:bta3_physia/features/live/presentation/screens/live_screen.dart'
 import 'package:bta3_physia/features/main_navigation/presentation/cubit/bottom_navigation_cubit.dart';
 import 'package:bta3_physia/core/constant/main_navigation_tabs.dart';
 import 'package:bta3_physia/features/main_navigation/presentation/widgets/custom_bottom_nav_bar.dart';
+import 'package:bta3_physia/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:bta3_physia/features/profile/presentation/screens/profile_screen.dart';
 import 'package:bta3_physia/features/results/presentation/cubit/results_cubit.dart';
 import 'package:bta3_physia/features/results/presentation/screens/results_screen.dart';
@@ -94,7 +95,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         );
 
       case MainNavigationTabs.profile:
-        return const ProfileScreen();
+        return BlocProvider<ProfileCubit>.value(
+          value: getIt<ProfileCubit>(),
+          child: const ProfileScreen(),
+        );
 
       default:
         return BlocProvider(
