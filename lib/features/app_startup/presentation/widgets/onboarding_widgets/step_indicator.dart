@@ -1,5 +1,5 @@
 import 'package:bta3_physia/core/style/app_color.dart';
-import 'package:bta3_physia/features/app_startup/model/onboarding_model.dart';
+import 'package:bta3_physia/features/app_startup/presentation/model/onboarding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

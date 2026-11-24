@@ -1,12 +1,16 @@
-import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
+import 'dart:async';
+
 import 'package:bta3_physia/core/helper/spacer.dart';
-import 'package:bta3_physia/features/app_startup/model/onboarding_model.dart';
+import 'package:bta3_physia/features/app_startup/presentation/cubit/app_startup_cubit.dart';
+import 'package:bta3_physia/features/app_startup/presentation/cubit/app_startup_state.dart';
+import 'package:bta3_physia/features/app_startup/presentation/model/onboarding_model.dart';
 import 'package:bta3_physia/features/app_startup/presentation/widgets/onboarding_widgets/next_button.dart';
 import 'package:bta3_physia/features/app_startup/presentation/widgets/onboarding_widgets/onboarding_page.dart';
 import 'package:bta3_physia/features/app_startup/presentation/widgets/onboarding_widgets/rocket_veil.dart';
 import 'package:bta3_physia/features/app_startup/presentation/widgets/onboarding_widgets/step_indicator.dart';
 import 'package:bta3_physia/features/app_startup/presentation/widgets/onboarding_widgets/top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingScreenContent extends StatefulWidget {
@@ -81,12 +85,12 @@ class _OnboardingScreenContentState extends State<OnboardingScreenContent>
   Animation<double> _veilFade = kAlwaysDismissedAnimation;
 
   int? _incoming;
-
   bool _running = false;
-
   bool _swapped = false;
-
   int _index = 0;
+
+  bool _isFinishing(AppStartupState state) =>
+      state is OnboardingCompleting || state is AppStartupContinue;
 
   @override
   void dispose() {
@@ -96,9 +100,10 @@ class _OnboardingScreenContentState extends State<OnboardingScreenContent>
   }
 
   void _onNext() {
-    if (_running) {
+    if (_running || _isFinishing(context.read<AppStartupCubit>().state)) {
       return;
     }
+
     final bool isLast = _index == onboardingPages.length - 1;
     _veilFade = isLast
         ? kAlwaysDismissedAnimation
@@ -116,37 +121,35 @@ class _OnboardingScreenContentState extends State<OnboardingScreenContent>
       _incoming = isLast ? null : _index + 1;
       _swapped = false;
     });
+
     _transition.forward(from: 0);
   }
 
   void _onSkip() {
-    if (_running) {
-      return;
-    }
-    Navigator.of(context).pushReplacementNamed(
-      RouteNames.loginScreen,
-      arguments: {'skipElectricTransition': true},
-    );
+    if (_running) return;
+
+    _onFinish();
   }
 
   void _onFinish() {
-    Navigator.of(context).pushReplacementNamed(
-      RouteNames.loginScreen,
-      arguments: {'skipElectricTransition': true},
-    );
+    unawaited(context.read<AppStartupCubit>().completeOnboarding());
   }
 
   void _onTransitionTick() {
     if (_swapped || !_running || _transition.value < _kRiseEnd) {
       return;
     }
+
     _swapped = true;
     final int? next = _incoming;
+
     if (next == null) {
       _onFinish();
       return;
     }
+
     setState(() => _index = next);
+
     if (_controller.hasClients) {
       _controller.jumpToPage(next);
     }
@@ -156,15 +159,22 @@ class _OnboardingScreenContentState extends State<OnboardingScreenContent>
     if (status != AnimationStatus.completed || !mounted) {
       return;
     }
+
     setState(() {
       _running = false;
       _incoming = null;
     });
+
     _transition.reset();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isFinishing = context.select(
+      (AppStartupCubit cubit) => _isFinishing(cubit.state),
+    );
+    final buttonsEnabled = !_running && !isFinishing;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Stack(
@@ -178,7 +188,7 @@ class _OnboardingScreenContentState extends State<OnboardingScreenContent>
               child: Column(
                 children: [
                   verticalSpace(6),
-                  TopBar(onSkip: _onSkip, enabled: !_running),
+                  TopBar(onSkip: _onSkip, enabled: buttonsEnabled),
                   verticalSpace(20),
                   Expanded(
                     child: PageView.builder(
@@ -196,7 +206,7 @@ class _OnboardingScreenContentState extends State<OnboardingScreenContent>
                   StepIndicator(index: _index),
                   verticalSpace(24),
                   IgnorePointer(
-                    ignoring: _running,
+                    ignoring: !buttonsEnabled,
                     child: NextButton(
                       label: onboardingPages[_index].buttonLabel,
                       scale: _buttonScale,

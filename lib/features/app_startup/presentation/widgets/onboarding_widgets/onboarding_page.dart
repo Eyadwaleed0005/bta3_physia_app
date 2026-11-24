@@ -1,6 +1,6 @@
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
-import 'package:bta3_physia/features/app_startup/model/onboarding_model.dart';
+import 'package:bta3_physia/features/app_startup/presentation/model/onboarding_model.dart';
 import 'package:bta3_physia/features/app_startup/presentation/widgets/onboarding_widgets/lottie_animation.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,5 @@
 import 'package:bta3_physia/app/dependency_injection/core_dependencies.dart';
+import 'package:bta3_physia/app/dependency_injection/features/app_startup_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/auth_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/courses_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/exams_dependencies.dart';
@@ -15,6 +16,7 @@ final GetIt getIt = GetIt.instance;
 
 void setupServiceLocator() {
   registerCoreDependencies(getIt);
+  registerAppStartupDependencies(getIt);
   registerAuthDependencies(getIt);
   registerMainNavigationDependencies(getIt);
   registerHomeDependencies(getIt);

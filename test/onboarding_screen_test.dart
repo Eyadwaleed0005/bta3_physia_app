@@ -1,6 +1,6 @@
 import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
 import 'package:bta3_physia/app/routes/screen_routes/app_routes.dart';
-import 'package:bta3_physia/features/app_startup/presentation/screens/onboarding/onboarding_screen.dart';
+import 'package:bta3_physia/features/app_startup/presentation/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
