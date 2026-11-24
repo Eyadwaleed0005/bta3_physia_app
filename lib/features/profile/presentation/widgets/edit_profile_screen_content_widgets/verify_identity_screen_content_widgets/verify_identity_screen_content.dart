@@ -4,7 +4,7 @@ import 'package:bta3_physia/core/style/app_color.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:bta3_physia/core/widgets/custom_app_bar.dart';
 import 'package:bta3_physia/core/widgets/custom_button.dart';
-import 'package:bta3_physia/features/auth/validation/auth_validation.dart';
+import 'package:bta3_physia/features/auth/presentation/validation/auth_validation.dart';
 import 'package:bta3_physia/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:bta3_physia/features/profile/presentation/widgets/edit_profile_screen_content_widgets/edit_profile_text_field.dart';
 import 'package:flutter/material.dart';

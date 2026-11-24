@@ -29,25 +29,20 @@ class CustomOperationResultDialog extends StatefulWidget {
   });
 
   final CustomOperationResultType type;
-
   final String title;
   final String message;
   final String actionText;
   final String? secondaryActionText;
-
   final String? email;
   final String? password;
-
   final VoidCallback? onActionPressed;
   final VoidCallback? onSecondaryActionPressed;
-
   final IconData successIcon;
   final IconData failureIcon;
 
   @override
-  State<CustomOperationResultDialog> createState() {
-    return _CustomOperationResultDialogState();
-  }
+  State<CustomOperationResultDialog> createState() =>
+      _CustomOperationResultDialogState();
 }
 
 class _CustomOperationResultDialogState
@@ -55,95 +50,54 @@ class _CustomOperationResultDialogState
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
-  bool get isSuccess {
-    return widget.type == CustomOperationResultType.success;
-  }
+  bool get isSuccess => widget.type == CustomOperationResultType.success;
 
-  bool get hasEmail {
-    return isSuccess && widget.email != null && widget.email!.trim().isNotEmpty;
-  }
+  bool get hasEmail => isSuccess && _emailController.text.isNotEmpty;
 
-  bool get hasPassword {
-    return isSuccess && widget.password != null && widget.password!.isNotEmpty;
-  }
+  bool get hasPassword => isSuccess && _passwordController.text.isNotEmpty;
 
-  bool get hasCredentials {
-    return hasEmail || hasPassword;
-  }
+  bool get hasCredentials => hasEmail || hasPassword;
 
-  bool get hasSecondaryAction {
-    return widget.secondaryActionText != null &&
-        widget.secondaryActionText!.trim().isNotEmpty;
-  }
+  bool get hasSecondaryAction =>
+      widget.secondaryActionText?.trim().isNotEmpty ?? false;
 
   @override
   void initState() {
     super.initState();
-
     _emailController = TextEditingController(text: widget.email?.trim() ?? '');
-
     _passwordController = TextEditingController(text: widget.password ?? '');
   }
 
   Future<void> _copyEmail() async {
-    if (!hasEmail) {
-      return;
-    }
+    if (!hasEmail) return;
 
-    await Clipboard.setData(ClipboardData(text: _emailController.text));
-
-    if (!mounted) {
-      return;
-    }
-
-    showAppToast(
-      context,
+    await _copy(
+      text: _emailController.text,
       message: 'تم نسخ البريد الإلكتروني',
       icon: Icons.copy_rounded,
     );
   }
 
   Future<void> _copyPassword() async {
-    if (!hasPassword) {
-      return;
-    }
+    if (!hasPassword) return;
 
-    await Clipboard.setData(ClipboardData(text: _passwordController.text));
-
-    if (!mounted) {
-      return;
-    }
-
-    showAppToast(
-      context,
+    await _copy(
+      text: _passwordController.text,
       message: 'تم نسخ كلمة المرور',
       icon: Icons.copy_rounded,
     );
   }
 
   Future<void> _copyCredentials() async {
-    final values = <String>[];
+    if (!hasCredentials) return;
 
-    if (hasEmail) {
-      values.add('البريد الإلكتروني: ${_emailController.text}');
-    }
+    final values = [
+      if (hasEmail) 'البريد الإلكتروني: ${_emailController.text}',
+      if (hasPassword) 'كلمة المرور: ${_passwordController.text}',
+    ];
 
-    if (hasPassword) {
-      values.add('كلمة المرور: ${_passwordController.text}');
-    }
-
-    if (values.isEmpty) {
-      return;
-    }
-
-    await Clipboard.setData(ClipboardData(text: values.join('\n')));
-
-    if (!mounted) {
-      return;
-    }
-
-    showAppToast(
-      context,
+    await _copy(
+      text: values.join('\n'),
       message: hasPassword
           ? 'تم نسخ بيانات تسجيل الدخول'
           : 'تم نسخ البريد الإلكتروني',
@@ -151,9 +105,19 @@ class _CustomOperationResultDialogState
     );
   }
 
+  Future<void> _copy({
+    required String text,
+    required String message,
+    required IconData icon,
+  }) async {
+    await Clipboard.setData(ClipboardData(text: text));
+    if (!mounted) return;
+
+    showAppToast(context, message: message, icon: icon);
+  }
+
   void _handlePrimaryAction() {
     final action = widget.onActionPressed;
-
     if (action != null) {
       action();
       return;
@@ -164,7 +128,6 @@ class _CustomOperationResultDialogState
 
   void _handleSecondaryAction() {
     final action = widget.onSecondaryActionPressed;
-
     if (action != null) {
       action();
       return;
@@ -177,14 +140,14 @@ class _CustomOperationResultDialogState
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = isSuccess ? ColorPalette.success : ColorPalette.error;
-
+    final statusColor = isSuccess
+        ? ColorPalette.success
+        : ColorPalette.crimsonHover;
     final icon = isSuccess ? widget.successIcon : widget.failureIcon;
 
     return AppAnimations.operationDialogEntrance(
@@ -195,47 +158,70 @@ class _CustomOperationResultDialogState
         child: SingleChildScrollView(
           child: Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.h),
+            constraints: isSuccess ? null : BoxConstraints(maxWidth: 360.w),
+            padding: EdgeInsets.symmetric(
+              horizontal: 24.w,
+              vertical: isSuccess ? 32.h : 24.h,
+            ),
             decoration: BoxDecoration(
-              color: ColorPalette.surface,
-              borderRadius: BorderRadius.circular(28.r),
+              color: isSuccess ? ColorPalette.surface : ColorPalette.fieldFill,
+              borderRadius: BorderRadius.circular(isSuccess ? 28.r : 24.r),
               border: Border.all(
-                color: statusColor.withValues(alpha: 0.30),
-                width: 1.2.w,
+                color: isSuccess
+                    ? statusColor.withValues(alpha: 0.30)
+                    : ColorPalette.fieldBorder,
+                width: isSuccess ? 1.2.w : 1.w,
               ),
               boxShadow: [
-                BoxShadow(
-                  color: statusColor.withValues(alpha: 0.12),
-                  blurRadius: 28.r,
-                  offset: Offset(0, 10.h),
-                ),
+                if (isSuccess)
+                  BoxShadow(
+                    color: statusColor.withValues(alpha: 0.12),
+                    blurRadius: 28.r,
+                    offset: Offset(0, 10.h),
+                  ),
               ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 72.w,
-                  height: 72.w,
-                  decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.10),
-                    shape: BoxShape.circle,
-                  ),
+                  width: isSuccess ? 72.w : 56.r,
+                  height: isSuccess ? 72.w : 56.r,
                   alignment: Alignment.center,
-                  child: Icon(icon, size: 38.sp, color: statusColor),
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(
+                      alpha: isSuccess ? 0.10 : 0.12,
+                    ),
+                    shape: isSuccess ? BoxShape.circle : BoxShape.rectangle,
+                    borderRadius: isSuccess
+                        ? null
+                        : BorderRadius.circular(16.r),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: isSuccess ? 38.sp : 28.r,
+                    color: statusColor,
+                  ),
                 ),
-                verticalSpace(22),
+                verticalSpace(isSuccess ? 22 : 16),
                 Text(
                   widget.title,
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.font18TextPrimarySemiBoldKufam(),
+                  textDirection: TextDirection.rtl,
+                  style: isSuccess
+                      ? AppTextStyle.font18TextPrimarySemiBoldKufam()
+                      : AppTextStyle.font19TextLightSemiBoldKufam(),
                 ),
-                verticalSpace(10),
+                verticalSpace(isSuccess ? 10 : 8),
                 Text(
                   widget.message,
                   textAlign: TextAlign.center,
                   textDirection: TextDirection.rtl,
-                  style: AppTextStyle.font14TextPrimaryBoldTajawal(),
+                  style: isSuccess
+                      ? AppTextStyle.font14TextPrimaryBoldTajawal()
+                      : AppTextStyle.font15TextMutedRegularTajawal().copyWith(
+                          height: 1.5,
+                        ),
                 ),
                 if (hasCredentials) ...[
                   verticalSpace(24),
@@ -278,17 +264,33 @@ class _CustomOperationResultDialogState
                     onPressed: _copyCredentials,
                   ),
                 ],
-                verticalSpace(26),
+                verticalSpace(isSuccess ? 26 : 24),
                 CustomButton(
                   text: widget.actionText,
                   onPressed: _handlePrimaryAction,
+                  height: isSuccess ? null : 48.h,
+                  borderRadius: isSuccess ? null : 14,
+                  background: isSuccess ? null : ColorPalette.accent,
+                  foreground: isSuccess ? null : ColorPalette.textPrimary,
+                  textStyle: isSuccess
+                      ? null
+                      : AppTextStyle.font16TextPrimaryBoldTajawal(),
                 ),
                 if (hasSecondaryAction) ...[
-                  verticalSpace(12),
-                  CustomSecondaryButton(
-                    text: widget.secondaryActionText!,
-                    onPressed: _handleSecondaryAction,
-                  ),
+                  verticalSpace(isSuccess ? 12 : 8),
+                  if (isSuccess)
+                    CustomSecondaryButton(
+                      text: widget.secondaryActionText!,
+                      onPressed: _handleSecondaryAction,
+                    )
+                  else
+                    TextButton(
+                      onPressed: _handleSecondaryAction,
+                      style: TextButton.styleFrom(
+                        foregroundColor: ColorPalette.textMuted,
+                      ),
+                      child: Text(widget.secondaryActionText!),
+                    ),
                 ],
               ],
             ),

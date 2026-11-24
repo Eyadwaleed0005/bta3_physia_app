@@ -19,11 +19,11 @@ final class RegisterFormState extends RegisterState {
     this.gradeError,
     this.passwordError,
     this.confirmationError,
+    this.submissionError,
   });
 
   final RegisterStep step;
-
-  final GradeOption? grade;
+  final GradeEntity? grade;
 
   final bool obscurePassword;
   final bool obscureConfirmation;
@@ -35,6 +35,7 @@ final class RegisterFormState extends RegisterState {
   final String? gradeError;
   final String? passwordError;
   final String? confirmationError;
+  final String? submissionError;
 
   int get stepNumber => step.index + 1;
 
@@ -46,11 +47,12 @@ final class RegisterFormState extends RegisterState {
       phoneError != null ||
       gradeError != null ||
       passwordError != null ||
-      confirmationError != null;
+      confirmationError != null ||
+      submissionError != null;
 
   RegisterFormState copyWith({
     RegisterStep? step,
-    GradeOption? grade,
+    GradeEntity? grade,
     bool? obscurePassword,
     bool? obscureConfirmation,
     bool? isSubmitting,
@@ -60,6 +62,8 @@ final class RegisterFormState extends RegisterState {
     String? gradeError,
     String? passwordError,
     String? confirmationError,
+    String? submissionError,
+    bool clearSubmissionError = false,
   }) {
     return RegisterFormState(
       step: step ?? this.step,
@@ -73,11 +77,14 @@ final class RegisterFormState extends RegisterState {
       gradeError: gradeError,
       passwordError: passwordError,
       confirmationError: confirmationError,
+      submissionError: clearSubmissionError
+          ? null
+          : submissionError ?? this.submissionError,
     );
   }
 
   @override
-  List<Object?> get props => <Object?>[
+  List<Object?> get props => [
     step,
     grade,
     obscurePassword,
@@ -89,6 +96,7 @@ final class RegisterFormState extends RegisterState {
     gradeError,
     passwordError,
     confirmationError,
+    submissionError,
   ];
 }
 
@@ -96,5 +104,5 @@ final class RegisterCompleted extends RegisterState {
   const RegisterCompleted();
 
   @override
-  List<Object?> get props => const <Object?>[];
+  List<Object?> get props => const [];
 }

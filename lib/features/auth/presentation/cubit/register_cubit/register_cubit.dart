@@ -1,12 +1,22 @@
-import 'package:bta3_physia/features/auth/model/grade_option.dart';
-import 'package:bta3_physia/features/auth/validation/auth_validation.dart';
+import 'package:bta3_physia/core/errors/error_model/app_error_model.dart';
+import 'package:bta3_physia/features/auth/domain/entities/register_entity.dart';
+import 'package:bta3_physia/features/auth/domain/use_cases/register_use_case.dart';
+import 'package:bta3_physia/features/auth/presentation/validation/auth_validation.dart';
+import 'package:bta3_physia/features/grades/domain/entities/grade_entity.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit() : super(const RegisterFormState());
+  RegisterCubit({required RegisterUseCase registerUseCase})
+    : _registerUseCase = registerUseCase,
+      super(const RegisterFormState());
+
+  final RegisterUseCase _registerUseCase;
+
+  ({String fullName, String email, String phoneNumber})? _details;
 
   RegisterFormState get _form => state is RegisterFormState
       ? state as RegisterFormState
@@ -20,33 +30,32 @@ class RegisterCubit extends Cubit<RegisterState> {
       return false;
     }
 
-    emit(_form.copyWith(step: RegisterStep.values[_form.step.index - 1]));
+    emit(
+      _form.copyWith(
+        step: RegisterStep.values[_form.step.index - 1],
+        clearSubmissionError: true,
+      ),
+    );
 
     return true;
   }
 
   void togglePasswordVisibility() {
-    if (state is! RegisterFormState) {
-      return;
-    }
+    if (state is! RegisterFormState) return;
 
     emit(_form.copyWith(obscurePassword: !_form.obscurePassword));
   }
 
   void toggleConfirmationVisibility() {
-    if (state is! RegisterFormState) {
-      return;
-    }
+    if (state is! RegisterFormState) return;
 
     emit(_form.copyWith(obscureConfirmation: !_form.obscureConfirmation));
   }
 
   void clearErrors() {
-    if (state is! RegisterFormState || !_form.hasErrors) {
-      return;
-    }
+    if (state is! RegisterFormState || !_form.hasErrors) return;
 
-    emit(_form.copyWith());
+    emit(_form.copyWith(clearSubmissionError: true));
   }
 
   void submitDetails({
@@ -54,13 +63,11 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String email,
     required String phone,
   }) {
-    if (state is! RegisterFormState || _form.isSubmitting) {
-      return;
-    }
+    if (state is! RegisterFormState || _form.isSubmitting) return;
 
-    final String? nameError = AuthValidation.fullName(fullName);
-    final String? emailError = AuthValidation.email(email);
-    final String? phoneError = AuthValidation.phone(phone);
+    final nameError = AuthValidation.fullName(fullName);
+    final emailError = AuthValidation.email(email);
+    final phoneError = AuthValidation.phone(phone);
 
     if (nameError != null || emailError != null || phoneError != null) {
       emit(
@@ -70,31 +77,31 @@ class RegisterCubit extends Cubit<RegisterState> {
           phoneError: phoneError,
         ),
       );
-
       return;
     }
+
+    _details = (
+      fullName: fullName.trim(),
+      email: email.trim(),
+      phoneNumber: phone.trim(),
+    );
 
     emit(_form.copyWith(step: RegisterStep.grade));
   }
 
-  void selectGrade(GradeOption grade) {
-    if (state is! RegisterFormState || _form.isSubmitting) {
-      return;
-    }
+  void selectGrade(GradeEntity grade) {
+    if (state is! RegisterFormState || _form.isSubmitting) return;
 
     emit(_form.copyWith(grade: grade));
   }
 
   void submitGrade() {
-    if (state is! RegisterFormState || _form.isSubmitting) {
-      return;
-    }
+    if (state is! RegisterFormState || _form.isSubmitting) return;
 
-    final String? gradeError = AuthValidation.grade(_form.grade?.id);
+    final gradeError = AuthValidation.grade(_form.grade?.gradeId);
 
     if (gradeError != null) {
       emit(_form.copyWith(gradeError: gradeError));
-
       return;
     }
 
@@ -105,35 +112,53 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String password,
     required String confirmation,
   }) async {
-    if (state is! RegisterFormState || _form.isSubmitting) {
+    final currentState = state;
+    if (currentState is! RegisterFormState ||
+        currentState.isSubmitting ||
+        currentState.step != RegisterStep.password) {
       return;
     }
 
-    final String? passwordError = AuthValidation.password(password);
-    final String? confirmationError = AuthValidation.confirmation(
+    final details = _details;
+    final grade = currentState.grade;
+    if (details == null || grade == null) return;
+
+    final passwordError = AuthValidation.password(password);
+    final confirmationError = AuthValidation.confirmation(
       confirmation,
       password,
     );
 
     if (passwordError != null || confirmationError != null) {
       emit(
-        _form.copyWith(
+        currentState.copyWith(
           passwordError: passwordError,
           confirmationError: confirmationError,
+          clearSubmissionError: true,
         ),
       );
-
       return;
     }
 
-    emit(_form.copyWith(isSubmitting: true));
+    emit(currentState.copyWith(isSubmitting: true, clearSubmissionError: true));
 
-    await Future<void>.delayed(const Duration(milliseconds: 600));
+    final Either<AppErrorModel, Unit> result = await _registerUseCase(
+      RegisterEntity(
+        fullName: details.fullName,
+        email: details.email,
+        phoneNumber: details.phoneNumber,
+        gradeId: grade.gradeId,
+        password: password,
+      ),
+    );
 
-    if (isClosed) {
-      return;
-    }
+    if (isClosed) return;
 
-    emit(const RegisterCompleted());
+    result.fold<void>(
+      (error) => emit(
+        _form.copyWith(isSubmitting: false, submissionError: error.message),
+      ),
+      (_) => emit(const RegisterCompleted()),
+    );
   }
 }

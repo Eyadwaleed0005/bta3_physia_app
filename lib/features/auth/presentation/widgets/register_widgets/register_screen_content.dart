@@ -1,5 +1,6 @@
 import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
 import 'package:bta3_physia/core/helper/spacer.dart';
+import 'package:bta3_physia/core/widgets/custom_operation_result_dialog.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth_backdrop.dart';
 import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth_message.dart';
@@ -39,8 +40,7 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
 
   void _onPrimary(RegisterStep step) {
     FocusScope.of(context).unfocus();
-
-    final RegisterCubit cubit = context.read<RegisterCubit>();
+    final cubit = context.read<RegisterCubit>();
 
     switch (step) {
       case RegisterStep.details:
@@ -60,33 +60,56 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
   }
 
   void _onBack() {
-    final bool moved = context.read<RegisterCubit>().goBack();
+    final cubit = context.read<RegisterCubit>();
+    final state = cubit.state;
 
-    if (!moved) {
-      // Leaving the flow from step 1 is the `Register → Login` move.
+    if (state is! RegisterFormState || state.isSubmitting) return;
+
+    if (!cubit.goBack()) {
       _onSignIn();
     }
   }
 
-  /// Figma plays the electric sweep over the register screen and reveals login,
-  /// so the handover always pushes a fresh login rather than popping back onto
-  /// the one the flow was entered from.
   void _onSignIn() {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      RouteNames.loginScreen,
-      (Route<dynamic> route) {
-        return false;
-      },
-    );
+    final state = context.read<RegisterCubit>().state;
+
+    if (state is! RegisterFormState || state.isSubmitting) return;
+
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(RouteNames.loginScreen, (_) => false);
   }
 
-  /// Called when [RegisterCompleted] fires — navigate to the success screen
-  /// via the electric transition (registered in [AuthRoutes]).
   void _onCompleted() {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      RouteNames.registerSuccessScreen,
-      (Route<dynamic> route) => false,
-    );
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(RouteNames.mainNavigationScreen, (_) => false);
+  }
+
+  bool _shouldListen(RegisterState previous, RegisterState current) {
+    return current is RegisterCompleted ||
+        (previous is RegisterFormState &&
+            previous.isSubmitting &&
+            current is RegisterFormState &&
+            !current.isSubmitting &&
+            current.submissionError != null);
+  }
+
+  void _onRegisterState(BuildContext context, RegisterState state) {
+    if (state is RegisterCompleted) {
+      _onCompleted();
+      return;
+    }
+
+    if (state case RegisterFormState(submissionError: final String message)) {
+      showDialog<void>(
+        context: context,
+        builder: (_) => CustomOperationResultDialog(
+          type: CustomOperationResultType.failure,
+          title: 'تعذّر إنشاء الحساب',
+          message: message,
+          actionText: 'حسنًا',
+        ),
+      );
+    }
   }
 
   String _primaryLabel(RegisterStep step) {
@@ -112,50 +135,40 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
   }
 
   String _titleFor(RegisterStep step) {
-    switch (step) {
-      case RegisterStep.details:
-        return 'إنشاء حساب جديد';
-      case RegisterStep.grade:
-        return 'ما صفّك الدراسي؟';
-      case RegisterStep.password:
-        return 'أنشئ كلمة المرور';
-    }
+    return switch (step) {
+      RegisterStep.details => 'إنشاء حساب جديد',
+      RegisterStep.grade => 'ما صفّك الدراسي؟',
+      RegisterStep.password => 'أنشئ كلمة المرور',
+    };
   }
 
   String _subtitleFor(RegisterStep step) {
-    switch (step) {
-      case RegisterStep.details:
-        return 'خطوتك الأولى نحو فهم الفيزياء.';
-      case RegisterStep.grade:
-        return 'اختر صفّك لعرض المحتوى المناسب لك.';
-      case RegisterStep.password:
-        return 'خطوة أخيرة لحماية حسابك.';
-    }
+    return switch (step) {
+      RegisterStep.details => 'خطوتك الأولى نحو فهم الفيزياء.',
+      RegisterStep.grade => 'اختر صفّك لعرض المحتوى المناسب لك.',
+      RegisterStep.password => 'خطوة أخيرة لحماية حسابك.',
+    };
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterCubit, RegisterState>(
-      listenWhen: (RegisterState previous, RegisterState current) =>
-          current is RegisterCompleted,
-      listener: (BuildContext context, RegisterState state) {
-        _onCompleted();
-      },
+      listenWhen: _shouldListen,
+      listener: _onRegisterState,
       child: AuthBackdrop(
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: BlocBuilder<RegisterCubit, RegisterState>(
-              buildWhen: (RegisterState previous, RegisterState current) =>
-                  current is! RegisterCompleted,
-              builder: (BuildContext context, RegisterState state) {
-                final RegisterFormState form = state is RegisterFormState
+              buildWhen: (_, current) => current is RegisterFormState,
+              builder: (context, state) {
+                final form = state is RegisterFormState
                     ? state
                     : const RegisterFormState();
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
+                  children: [
                     verticalSpace(17),
                     Header(onBack: _onBack),
                     verticalSpace(26),
@@ -168,7 +181,7 @@ class _RegisterScreenContentState extends State<RegisterScreenContent> {
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
+                          children: [
                             AuthMessage(
                               title: _titleFor(form.step),
                               subtitle: _subtitleFor(form.step),

@@ -3,9 +3,8 @@ import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
 import 'package:bta3_physia/core/transition/app_transition.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
-import 'package:bta3_physia/features/auth/presentation/screens/login/login_screen.dart';
-import 'package:bta3_physia/features/auth/presentation/screens/register/register_screen.dart';
-import 'package:bta3_physia/features/auth/presentation/screens/register/register_success_screen.dart';
+import 'package:bta3_physia/features/auth/presentation/screens/login_screen.dart';
+import 'package:bta3_physia/features/auth/presentation/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,13 +43,6 @@ abstract final class AuthRoutes {
             child: const RegisterScreen(),
           ),
         );
-
-      case RouteNames.registerSuccessScreen:
-        return routeBuilder(
-          settings: settings,
-          screen: const RegisterSuccessScreen(),
-        );
-
       default:
         return null;
     }
