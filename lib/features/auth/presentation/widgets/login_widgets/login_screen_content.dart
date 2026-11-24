@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/core/style/textstyles.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
@@ -8,7 +6,9 @@ import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth
 import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth_brand_mark.dart';
 import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth_link_text.dart';
 import 'package:bta3_physia/features/auth/presentation/widgets/login_widgets/login_form.dart';
-import 'package:bta3_physia/app/routes/screen_routes/route_names.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreenContent extends StatelessWidget {
   const LoginScreenContent({super.key});
@@ -19,34 +19,26 @@ class LoginScreenContent extends StatelessWidget {
 
   void _backToOnboarding(BuildContext context) {
     Navigator.of(context)
-        .pushNamedAndRemoveUntil(RouteNames.onboardingScreen, (route) => false);
+        .pushNamedAndRemoveUntil(RouteNames.onboardingScreen, (_) => false);
   }
 
   void _onAuthenticated(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      RouteNames.mainNavigationScreen,
-      (Route<dynamic> route) {
-        return false;
-      },
-    );
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(RouteNames.mainNavigationScreen, (_) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
-      listenWhen: (LoginState previous, LoginState current) {
-        return current is LoginAuthenticated;
-      },
-      listener: (BuildContext context, LoginState state) {
-        _onAuthenticated(context);
-      },
+      listenWhen: (_, current) => current is LoginAuthenticated,
+      listener: (context, _) => _onAuthenticated(context),
       child: AuthBackdrop(
         child: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
+              children: [
                 verticalSpace(7),
                 const Center(child: AuthBrandMark(height: 81, showHalo: true)),
                 verticalSpace(29),

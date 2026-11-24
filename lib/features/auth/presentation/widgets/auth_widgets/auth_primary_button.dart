@@ -31,13 +31,9 @@ class AuthPrimaryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         textDirection: TextDirection.ltr,
         children: <Widget>[
-          Text(label, style: AppTextStyle.font18TextPrimaryBoldTajawal()),
+          Icon(Icons.arrow_back, size: 22.r, color: ColorPalette.textPrimary),
           horizontalSpace(12),
-          Icon(
-            Icons.arrow_forward,
-            size: 22.r,
-            color: ColorPalette.textPrimary,
-          ),
+          Text(label, style: AppTextStyle.font18TextPrimaryBoldTajawal()),
         ],
       ),
     );
