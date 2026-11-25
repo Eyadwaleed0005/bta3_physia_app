@@ -39,7 +39,6 @@ class _SplashScreenContentState extends State<SplashScreenContent>
     }
 
     await Future<void>.delayed(const Duration(milliseconds: 600));
-
     if (!mounted) return;
 
     _animationFinished = true;
@@ -50,8 +49,10 @@ class _SplashScreenContentState extends State<SplashScreenContent>
     if (!_animationFinished || _hasNavigated) return;
 
     final route = switch (state) {
+      AppStartupAuthenticated() => RouteNames.mainNavigationScreen,
       OnboardingRequired() => RouteNames.onboardingScreen,
-      AppStartupContinue() => RouteNames.loginScreen,
+      AppStartupContinue() ||
+      AppStartupSessionCheckFailed() => RouteNames.loginScreen,
       _ => null,
     };
 

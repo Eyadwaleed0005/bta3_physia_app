@@ -19,4 +19,9 @@ abstract final class FirebaseErrorCodes {
   static const String studentProfileMissing = 'student-profile-missing';
   static const String accountInactive = 'account-inactive';
   static const String alreadyLoggedIn = 'already-logged-in';
+
+  static const String failedPrecondition = 'failed-precondition';
+  static const String invalidStudentProfileResponse =
+      'invalid-student-profile-response';
+  static const String functionDetailsCodeKey = 'code';
 }

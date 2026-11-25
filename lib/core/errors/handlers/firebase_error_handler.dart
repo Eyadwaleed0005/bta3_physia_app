@@ -110,4 +110,31 @@ abstract final class FirebaseErrorHandler {
       ),
     };
   }
+
+  static AppErrorModel handleFunctions(String code, {Object? details}) {
+    if (code == FirebaseErrorCodes.failedPrecondition &&
+        details is Map &&
+        details[FirebaseErrorCodes.functionDetailsCodeKey] ==
+            FirebaseErrorCodes.gradeUnavailable) {
+      return handleAuth(FirebaseErrorCodes.gradeUnavailable);
+    }
+
+    return switch (code) {
+      FirebaseErrorCodes.invalidStudentProfileResponse => const AppErrorModel(
+        code: FirebaseErrorCodes.invalidStudentProfileResponse,
+        message: 'تعذّر تأكيد إنشاء ملف الطالب.',
+        type: AppErrorType.unknown,
+        isRetryable: false,
+      ),
+      FirebaseErrorCodes.unauthenticated ||
+      FirebaseErrorCodes.unavailable ||
+      FirebaseErrorCodes.deadlineExceeded => handleFirestore(code),
+      _ => const AppErrorModel(
+        code: 'student_profile_creation_failed',
+        message: 'تعذّر إنشاء ملف الطالب.',
+        type: AppErrorType.unknown,
+        isRetryable: false,
+      ),
+    };
+  }
 }

@@ -21,3 +21,13 @@ final class OnboardingCompleting extends AppStartupState {
 final class AppStartupContinue extends AppStartupState {
   const AppStartupContinue();
 }
+
+final class AppStartupAuthenticated extends AppStartupState {
+  const AppStartupAuthenticated();
+}
+
+final class AppStartupSessionCheckFailed extends AppStartupState {
+  const AppStartupSessionCheckFailed(this.message);
+
+  final String message;
+}

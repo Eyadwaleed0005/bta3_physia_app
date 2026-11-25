@@ -1,3 +1,4 @@
+import 'package:bta3_physia/core/firebase/functions/app_firebase_functions.dart';
 import 'package:bta3_physia/features/auth/data/data_sources/login_remote_data_source/firebase_login_remote_data_source.dart';
 import 'package:bta3_physia/features/auth/data/data_sources/login_remote_data_source/login_remote_data_source.dart';
 import 'package:bta3_physia/features/auth/data/data_sources/register_remote_data_source/firebase_register_remote_data_source.dart';
@@ -23,10 +24,9 @@ void registerAuthDependencies(GetIt getIt) {
   getIt.registerLazySingleton<RegisterRemoteDataSource>(
     () => FirebaseRegisterRemoteDataSource(
       auth: FirebaseAuth.instance,
-      firestore: FirebaseFirestore.instance,
+      functions: AppFirebaseFunctions.instance,
     ),
   );
-
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       loginRemoteDataSource: getIt<LoginRemoteDataSource>(),

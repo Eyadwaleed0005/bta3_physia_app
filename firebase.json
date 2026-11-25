@@ -1,1 +1,43 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"bta3-physia-education-platform","appId":"1:538709542608:android:7921ee665cff23b60980d5","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"bta3-physia-education-platform","configurations":{"android":"1:538709542608:android:7921ee665cff23b60980d5","ios":"1:538709542608:ios:74a4cb330dcce5400980d5","macos":"1:538709542608:ios:e1b704c338a61e8d0980d5","web":"1:538709542608:web:42cdc78ff341ee8b0980d5","windows":"1:538709542608:web:0361ec38277285c40980d5"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "bta3-physia-education-platform",
+          "appId": "1:538709542608:android:7921ee665cff23b60980d5",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "bta3-physia-education-platform",
+          "configurations": {
+            "android": "1:538709542608:android:7921ee665cff23b60980d5",
+            "ios": "1:538709542608:ios:74a4cb330dcce5400980d5",
+            "macos": "1:538709542608:ios:e1b704c338a61e8d0980d5",
+            "web": "1:538709542608:web:42cdc78ff341ee8b0980d5",
+            "windows": "1:538709542608:web:0361ec38277285c40980d5"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}
