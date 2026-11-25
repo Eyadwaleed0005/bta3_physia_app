@@ -1,8 +1,7 @@
 import 'package:bta3_physia/core/errors/handlers/firebase_error_codes.dart';
-import 'package:bta3_physia/core/firebase/firestore/firestore_collections.dart';
-import 'package:bta3_physia/core/firebase/firestore/firestore_fields.dart';
+import 'package:bta3_physia/core/firebase/functions/student_profile_function_contract.dart';
 import 'package:bta3_physia/features/auth/data/models/register_request_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'register_remote_data_source.dart';
@@ -10,74 +9,58 @@ import 'register_remote_data_source.dart';
 class FirebaseRegisterRemoteDataSource implements RegisterRemoteDataSource {
   const FirebaseRegisterRemoteDataSource({
     required FirebaseAuth auth,
-    required FirebaseFirestore firestore,
+    required FirebaseFunctions functions,
   }) : _auth = auth,
-       _firestore = firestore;
+       _functions = functions;
 
   final FirebaseAuth _auth;
-  final FirebaseFirestore _firestore;
+  final FirebaseFunctions _functions;
 
   @override
   Future<void> register(RegisterRequestModel request) async {
-    final email = request.email.trim();
-
-    final credential = await _createOrSignIn(
-      email: email,
+    await _createOrSignIn(
+      email: request.email.trim(),
       password: request.password,
     );
 
+    var registrationCompleted = false;
+
     try {
-      final user = credential.user;
-      if (user == null) {
-        throw FirebaseAuthException(
-          code: FirebaseErrorCodes.registrationUserMissing,
-        );
-      }
+      final result = await _functions
+          .httpsCallable(StudentProfileFunctionContract.name)
+          .call<Object?>({
+            StudentProfileFunctionContract.fullName: request.fullName.trim(),
+            StudentProfileFunctionContract.phoneNumber: request.phoneNumber
+                .trim(),
+            StudentProfileFunctionContract.gradeId: request.gradeId,
+          });
 
-      final studentRef = _firestore
-          .collection(FirestoreCollections.student)
-          .doc(user.uid);
-
-      final gradeRef = _firestore
-          .collection(FirestoreCollections.grades)
-          .doc(request.gradeId);
-
-      await _firestore.runTransaction<void>((transaction) async {
-        final student = await transaction.get(studentRef);
-        if (student.exists) {
+      switch (result.data) {
+        case {StudentProfileFunctionContract.created: true}:
+          registrationCompleted = true;
+        case {StudentProfileFunctionContract.created: false}:
           throw FirebaseAuthException(
             code: FirebaseErrorCodes.emailAlreadyInUse,
           );
-        }
-
-        final grade = await transaction.get(gradeRef);
-        if (grade.data()?[FirestoreFields.isDeleting] != false) {
-          throw FirebaseAuthException(
-            code: FirebaseErrorCodes.gradeUnavailable,
+        default:
+          throw FirebaseFunctionsException(
+            code: FirebaseErrorCodes.invalidStudentProfileResponse,
+            message: FirebaseErrorCodes.invalidStudentProfileResponse,
           );
-        }
-
-        transaction.set(studentRef, {
-          FirestoreFields.name: request.fullName.trim(),
-          FirestoreFields.email: email,
-          FirestoreFields.phoneNumber: request.phoneNumber.trim(),
-          FirestoreFields.gradeId: request.gradeId,
-          FirestoreFields.loggin: false,
-          FirestoreFields.isActive: true,
-          FirestoreFields.createdAt: FieldValue.serverTimestamp(),
-        });
-      });
+      }
     } finally {
-      await _auth.signOut();
+      if (!registrationCompleted) {
+        await _auth.signOut();
+      }
     }
   }
 
-  Future<UserCredential> _createOrSignIn({
+  Future<void> _createOrSignIn({
     required String email,
     required String password,
   }) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -86,7 +69,7 @@ class FirebaseRegisterRemoteDataSource implements RegisterRemoteDataSource {
         rethrow;
       }
 
-      return _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
     }
   }
 }
