@@ -1,4 +1,6 @@
 import 'package:bta3_physia/app/dependency_injection/service_locator.dart';
+import 'package:bta3_physia/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,14 +17,10 @@ abstract final class AppInitializer {
 
     await ScreenUtil.ensureScreenSize();
 
-    setupServiceLocator();
-
-    /* await Firebase.initializeApp(
+    await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    FirebaseMessaging.onBackgroundMessage(
-      firebaseNotificationBackgroundHandler,
-    ); */
+    setupServiceLocator();
   }
 }

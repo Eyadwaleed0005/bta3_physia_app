@@ -1,7 +1,7 @@
 import 'package:bta3_physia/core/helper/spacer.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth_text_field.dart';
-import 'package:bta3_physia/features/auth/validation/auth_validation.dart';
+import 'package:bta3_physia/features/auth/presentation/validation/auth_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

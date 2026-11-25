@@ -3,6 +3,7 @@ import 'package:bta3_physia/app/dependency_injection/features/app_startup_depend
 import 'package:bta3_physia/app/dependency_injection/features/auth_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/courses_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/exams_dependencies.dart';
+import 'package:bta3_physia/app/dependency_injection/features/grades_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/home_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/lesson_quiz_dependencies.dart';
 import 'package:bta3_physia/app/dependency_injection/features/live_dependencies.dart';
@@ -15,6 +16,7 @@ import 'package:get_it/get_it.dart';
 final GetIt getIt = GetIt.instance;
 
 void setupServiceLocator() {
+  registerGradesDependencies(getIt);
   registerCoreDependencies(getIt);
   registerAppStartupDependencies(getIt);
   registerAuthDependencies(getIt);

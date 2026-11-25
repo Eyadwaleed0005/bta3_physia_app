@@ -1,8 +1,9 @@
 import 'package:bta3_physia/core/helper/spacer.dart';
+import 'package:bta3_physia/core/widgets/custom_operation_result_dialog.dart';
 import 'package:bta3_physia/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
+import 'package:bta3_physia/features/auth/presentation/validation/auth_validation.dart';
 import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth_primary_button.dart';
 import 'package:bta3_physia/features/auth/presentation/widgets/auth_widgets/auth_text_field.dart';
-import 'package:bta3_physia/features/auth/validation/auth_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,39 +40,57 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   bool _shouldRebuild(LoginState previous, LoginState current) {
-    if (current is! LoginFormState) {
-      return false;
-    }
-
-    if (previous is! LoginFormState) {
-      return true;
-    }
+    if (current is! LoginFormState) return false;
+    if (previous is! LoginFormState) return true;
 
     return previous.obscurePassword != current.obscurePassword ||
         previous.isSubmitting != current.isSubmitting;
   }
 
+  bool _shouldShowError(LoginState previous, LoginState current) {
+    if (current is! LoginFormState || current.submissionError == null) {
+      return false;
+    }
+
+    return previous is! LoginFormState ||
+        previous.submissionError != current.submissionError;
+  }
+
+  void _showErrorDialog(BuildContext context, LoginState state) {
+    if (state case LoginFormState(submissionError: final String message)) {
+      showDialog<void>(
+        context: context,
+        builder: (_) => CustomOperationResultDialog(
+          type: CustomOperationResultType.failure,
+          title: 'تعذّر تسجيل الدخول',
+          message: message,
+          actionText: 'حسنًا',
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocConsumer<LoginCubit, LoginState>(
+      listenWhen: _shouldShowError,
+      listener: _showErrorDialog,
       buildWhen: _shouldRebuild,
-      builder: (BuildContext context, LoginState state) {
-        final LoginFormState form = state is LoginFormState
-            ? state
-            : const LoginFormState();
+      builder: (context, state) {
+        final form = state is LoginFormState ? state : const LoginFormState();
 
         return Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               AuthTextField(
                 controller: _emailController,
                 label: 'البريد الإلكتروني',
                 hint: 'أدخل بريدك الإلكتروني',
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                autofillHints: const <String>[AutofillHints.email],
+                autofillHints: const [AutofillHints.email],
                 validator: AuthValidation.email,
               ),
               verticalSpace(19),
@@ -81,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
                 hint: 'أدخل كلمة المرور',
                 obscureText: form.obscurePassword,
                 textInputAction: TextInputAction.done,
-                autofillHints: const <String>[AutofillHints.password],
+                autofillHints: const [AutofillHints.password],
                 validator: AuthValidation.password,
                 onToggleObscure: context
                     .read<LoginCubit>()

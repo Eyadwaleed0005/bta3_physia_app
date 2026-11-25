@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppErrorState extends StatelessWidget {
-  final String message;
-  final VoidCallback? onRetry;
-  final String retryText;
-
   const AppErrorState({
     super.key,
     required this.message,
@@ -16,141 +12,102 @@ class AppErrorState extends StatelessWidget {
     this.retryText = 'إعادة المحاولة',
   });
 
+  final String message;
+  final VoidCallback? onRetry;
+  final String retryText;
+
   bool get _isNetworkError {
     final normalizedMessage = message.trim().toLowerCase();
 
-    return normalizedMessage.contains('الإنترنت') ||
-        normalizedMessage.contains('الانترنت') ||
-        normalizedMessage.contains('الشبكة') ||
-        normalizedMessage.contains('الاتصال') ||
-        normalizedMessage.contains('network') ||
-        normalizedMessage.contains('internet') ||
-        normalizedMessage.contains('offline') ||
-        normalizedMessage.contains('socket');
+    return const [
+      'الإنترنت',
+      'الانترنت',
+      'الشبكة',
+      'الاتصال',
+      'network',
+      'internet',
+      'offline',
+      'socket',
+    ].any(normalizedMessage.contains);
   }
 
   @override
   Widget build(BuildContext context) {
-    final errorIcon = _isNetworkError
+    final icon = _isNetworkError
         ? Icons.wifi_off_rounded
         : Icons.error_outline_rounded;
 
     return Center(
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+        padding: EdgeInsets.symmetric(vertical: 8.h),
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 340.w),
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
-            decoration: BoxDecoration(
-              color: ColorPalette.cardBackground.withValues(alpha: 0.92),
-              borderRadius: BorderRadius.circular(24.r),
-              border: Border.all(
-                color: ColorPalette.error.withValues(alpha: 0.12),
-                width: 1.w,
+          constraints: BoxConstraints(maxWidth: 360.w),
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(16.r),
+              decoration: BoxDecoration(
+                color: ColorPalette.fieldFill,
+                borderRadius: BorderRadius.circular(18.r),
+                border: Border.all(color: ColorPalette.fieldBorder),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.06),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: 112.r,
-                  height: 112.r,
-                  child: Stack(
-                    alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
                     children: [
                       Container(
-                        width: 112.r,
-                        height: 112.r,
+                        width: 40.r,
+                        height: 40.r,
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: ColorPalette.error.withValues(alpha: 0.06),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Container(
-                        width: 82.r,
-                        height: 82.r,
-                        decoration: BoxDecoration(
-                          color: ColorPalette.error.withValues(alpha: 0.12),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: ColorPalette.error.withValues(alpha: 0.15),
-                            width: 1.5.w,
+                          color: ColorPalette.crimsonHover.withValues(
+                            alpha: 0.12,
                           ),
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Icon(
-                          errorIcon,
-                          size: 42.sp,
-                          color: ColorPalette.error,
+                          icon,
+                          size: 22.r,
+                          color: ColorPalette.crimsonHover,
                         ),
                       ),
-                      Positioned(
-                        top: 8.r,
-                        right: 10.r,
-                        child: Container(
-                          width: 18.r,
-                          height: 18.r,
-                          decoration: BoxDecoration(
-                            color: ColorPalette.error,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: ColorPalette.cardBackground,
-                              width: 3.w,
-                            ),
+                      horizontalSpace(12),
+                      Expanded(
+                        child: Semantics(
+                          liveRegion: true,
+                          child: Text(
+                            message,
+                            style: AppTextStyle.font15TextMutedRegularTajawal()
+                                .copyWith(
+                                  color: ColorPalette.textLight,
+                                  height: 1.5,
+                                ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                verticalSpace(22),
-                Text(
-                  message,
-                  textDirection: TextDirection.rtl,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyle.font14TextSecondaryRegularTajawal()
-                      .copyWith(height: 1.6),
-                ),
-                if (onRetry != null) ...[
-                  verticalSpace(24),
-                  SizedBox(
-                    width: 190.w,
-                    child: FilledButton.icon(
-                      onPressed: onRetry,
-                      icon: Icon(
-                        Icons.refresh_rounded,
-                        size: 20.sp,
-                        color: ColorPalette.cardBackground,
-                      ),
-                      label: Text(
-                        retryText,
-                        style: AppTextStyle.font14CardBackgroundMediumKufam(),
-                      ),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: ColorPalette.primary,
-                        foregroundColor: ColorPalette.cardBackground,
-                        elevation: 0,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 12.h,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14.r),
+                  if (onRetry != null) ...[
+                    verticalSpace(12),
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: TextButton.icon(
+                        onPressed: onRetry,
+                        icon: Icon(Icons.refresh_rounded, size: 18.r),
+                        label: Text(retryText),
+                        style: TextButton.styleFrom(
+                          foregroundColor: ColorPalette.accent,
+                          textStyle:
+                              AppTextStyle.font14TextLightSemiBoldTajawal(),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),
